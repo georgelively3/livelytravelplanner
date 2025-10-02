@@ -2,7 +2,9 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 require('dotenv').config();
 
-const dbPath = path.join(__dirname, '..', 'database', 'travel_planner.db');
+// Use different database for tests
+const dbName = process.env.NODE_ENV === 'test' ? 'test.db' : 'travel_planner.db';
+const dbPath = process.env.DB_PATH || path.join(__dirname, '..', 'database', dbName);
 
 // Create database directory if it doesn't exist
 const fs = require('fs');
@@ -21,6 +23,12 @@ const db = new sqlite3.Database(dbPath, (err) => {
     db.run('PRAGMA foreign_keys = ON');
   }
 });
+
+// Initialize database with required tables
+const initialize = async () => {
+  const setupScript = require('../scripts/setupDatabase');
+  await setupScript();
+};
 
 // Promisify database operations
 const query = (sql, params = []) => {
@@ -54,5 +62,6 @@ const run = (sql, params = []) => {
 module.exports = {
   query,
   run,
-  db
+  db,
+  initialize
 };
