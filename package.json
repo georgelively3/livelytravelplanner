@@ -1,0 +1,27 @@
+{
+  "name": "lively-travel-planner",
+  "version": "1.0.0",
+  "description": "Full-stack travel itinerary planning application",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-deps": "npm install && cd server && npm install && cd ../client && npm install",
+    "setup-db": "cd server && npm run setup-db"
+  },
+  "keywords": [
+    "travel",
+    "itinerary",
+    "planning",
+    "react",
+    "nodejs",
+    "postgresql"
+  ],
+  "author": "Lively Travel Planner",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
