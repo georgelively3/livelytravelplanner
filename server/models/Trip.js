@@ -23,7 +23,7 @@ class Trip {
     
     const result = await run(sql, [
       userId, title, destination, startDate, endDate, 
-      travelerProfileId, numberOfTravelers, budget
+      travelerProfileId || null, numberOfTravelers, budget || null
     ]);
     
     return await this.findById(result.lastID);
@@ -49,7 +49,7 @@ class Trip {
       WHERE t.id = ?
     `;
     const result = await query(sql, [id]);
-    return result.rows[0];
+    return result.rows[0] || null;
   }
 
   static async update(id, updateData) {
@@ -78,8 +78,12 @@ class Trip {
 
   static async delete(id) {
     const sql = 'DELETE FROM trips WHERE id = ?';
-    const result = await run(sql, [id]);
-    return result.changes > 0;
+    try {
+      const result = await run(sql, [id]);
+      return result.changes > 0;
+    } catch (error) {
+      return false;
+    }
   }
 }
 

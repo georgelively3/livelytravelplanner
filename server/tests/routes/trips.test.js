@@ -2,9 +2,12 @@ const request = require('supertest');
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const tripRoutes = require('../../routes/trips');
-const authMiddleware = require('../../middleware/auth');
-const database = require('../../config/database');
+const { authenticateToken } = require('../../middleware/auth');
+const { initializeTestDatabase, clearDatabase } = require('../../config/testDatabase');
 const User = require('../../models/User');
+
+// Set up JWT_SECRET for tests
+process.env.JWT_SECRET = 'test-secret-key';
 
 const app = express();
 app.use(express.json());
@@ -14,8 +17,14 @@ describe('Trip Routes', () => {
   let testUser;
   let authToken;
 
+  beforeAll(async () => {
+    // Set up test environment
+    process.env.NODE_ENV = 'test';
+    await initializeTestDatabase();
+  });
+
   beforeEach(async () => {
-    await database.initialize();
+    await clearDatabase();
     
     // Create test user
     testUser = await User.create({
@@ -28,7 +37,7 @@ describe('Trip Routes', () => {
     // Generate auth token
     authToken = jwt.sign(
       { userId: testUser.id },
-      process.env.JWT_SECRET || 'test-secret-key',
+      process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
   });
@@ -40,7 +49,6 @@ describe('Trip Routes', () => {
         destination: 'Paris, France',
         startDate: '2025-12-01',
         endDate: '2025-12-05',
-        travelerProfileId: 1,
         numberOfTravelers: 2,
         budget: 1500
       };
@@ -64,7 +72,6 @@ describe('Trip Routes', () => {
         destination: 'London, UK',
         startDate: '2025-11-01',
         endDate: '2025-11-05',
-        travelerProfileId: 2,
         numberOfTravelers: 1
         // No budget provided
       };
@@ -84,7 +91,6 @@ describe('Trip Routes', () => {
         destination: 'Nowhere',
         startDate: '2025-12-01',
         endDate: '2025-12-05',
-        travelerProfileId: 1,
         numberOfTravelers: 1
       };
 
@@ -100,8 +106,8 @@ describe('Trip Routes', () => {
         destination: 'Paris',
         startDate: 'invalid-date',
         endDate: '2025-12-05',
-        travelerProfileId: 'not-a-number',
-        numberOfTravelers: -1 // negative number
+        numberOfTravelers: 'not-a-number',
+        budget: -1 // negative number
       };
 
       const response = await request(app)
@@ -141,7 +147,6 @@ describe('Trip Routes', () => {
           destination: 'Paris, France',
           startDate: '2025-12-01',
           endDate: '2025-12-05',
-          travelerProfileId: 1,
           numberOfTravelers: 2
         });
 
@@ -153,7 +158,6 @@ describe('Trip Routes', () => {
           destination: 'London, UK',
           startDate: '2025-11-01',
           endDate: '2025-11-05',
-          travelerProfileId: 2,
           numberOfTravelers: 1
         });
     });
@@ -212,7 +216,6 @@ describe('Trip Routes', () => {
           destination: 'Rome, Italy',
           startDate: '2025-10-01',
           endDate: '2025-10-05',
-          travelerProfileId: 1,
           numberOfTravelers: 2,
           budget: 2000
         });

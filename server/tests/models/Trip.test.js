@@ -1,12 +1,18 @@
 const Trip = require('../../models/Trip');
 const User = require('../../models/User');
-const database = require('../../config/database');
+const { initializeTestDatabase, clearDatabase } = require('../../config/testDatabase');
 
 describe('Trip Model', () => {
   let testUser;
 
+  beforeAll(async () => {
+    // Set up test environment
+    process.env.NODE_ENV = 'test';
+    await initializeTestDatabase();
+  });
+
   beforeEach(async () => {
-    await database.initialize();
+    await clearDatabase();
     
     // Create a test user for trip operations
     testUser = await User.create({
@@ -35,12 +41,12 @@ describe('Trip Model', () => {
       expect(trip.id).toBeDefined();
       expect(trip.title).toBe(tripData.title);
       expect(trip.destination).toBe(tripData.destination);
-      expect(trip.startDate).toBe(tripData.startDate);
-      expect(trip.endDate).toBe(tripData.endDate);
-      expect(trip.numberOfTravelers).toBe(tripData.numberOfTravelers);
+      expect(trip.start_date).toBe(tripData.startDate);
+      expect(trip.end_date).toBe(tripData.endDate);
+      expect(trip.number_of_travelers).toBe(tripData.numberOfTravelers);
       expect(trip.budget).toBe(tripData.budget);
-      expect(trip.userId).toBe(testUser.id);
-      expect(trip.createdAt).toBeDefined();
+      expect(trip.user_id).toBe(testUser.id);
+      expect(trip.created_at).toBeDefined();
     });
 
     it('should create trip without budget (optional field)', async () => {
@@ -122,8 +128,8 @@ describe('Trip Model', () => {
       
       expect(userTrips).toBeDefined();
       expect(userTrips.length).toBe(2);
-      expect(userTrips[0].userId).toBe(testUser.id);
-      expect(userTrips[1].userId).toBe(testUser.id);
+      expect(userTrips[0].user_id).toBe(testUser.id);
+      expect(userTrips[1].user_id).toBe(testUser.id);
     });
 
     it('should return empty array for user with no trips', async () => {

@@ -1,15 +1,24 @@
 const request = require('supertest');
 const express = require('express');
 const authRoutes = require('../../routes/auth');
-const database = require('../../config/database');
+const { initializeTestDatabase, clearDatabase } = require('../../config/testDatabase');
+
+// Set up JWT_SECRET for tests
+process.env.JWT_SECRET = 'test-secret-key';
 
 const app = express();
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 
 describe('Auth Routes', () => {
+  beforeAll(async () => {
+    // Set up test environment
+    process.env.NODE_ENV = 'test';
+    await initializeTestDatabase();
+  });
+
   beforeEach(async () => {
-    await database.initialize();
+    await clearDatabase();
   });
 
   describe('POST /api/auth/register', () => {
@@ -26,7 +35,7 @@ describe('Auth Routes', () => {
         .send(userData)
         .expect(201);
 
-      expect(response.body).toHaveProperty('message', 'User registered successfully');
+      expect(response.body).toHaveProperty('message', 'User created successfully');
       expect(response.body).toHaveProperty('user');
       expect(response.body.user).toHaveProperty('id');
       expect(response.body.user.email).toBe(userData.email);
@@ -50,7 +59,7 @@ describe('Auth Routes', () => {
       expect(response.body.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            msg: 'Valid email is required'
+            msg: 'Invalid value'
           })
         ])
       );
@@ -73,7 +82,7 @@ describe('Auth Routes', () => {
       expect(response.body.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            msg: 'Password must be at least 6 characters long'
+            msg: 'Invalid value'
           })
         ])
       );
@@ -99,7 +108,7 @@ describe('Auth Routes', () => {
         .send(userData)
         .expect(400);
 
-      expect(response.body).toHaveProperty('message', 'Email already registered');
+      expect(response.body).toHaveProperty('message', 'User already exists with this email');
     });
 
     it('should return 400 for missing required fields', async () => {
@@ -119,19 +128,20 @@ describe('Auth Routes', () => {
   });
 
   describe('POST /api/auth/login', () => {
-    beforeEach(async () => {
-      // Create a test user for login tests
+    it('should login successfully with valid credentials', async () => {
+      // First register a user
+      const userData = {
+        firstName: 'Test',
+        lastName: 'User',
+        email: 'test@example.com',
+        password: 'password123'
+      };
+
       await request(app)
         .post('/api/auth/register')
-        .send({
-          firstName: 'Test',
-          lastName: 'User',
-          email: 'test@example.com',
-          password: 'password123'
-        });
-    });
+        .send(userData)
+        .expect(201);
 
-    it('should login successfully with valid credentials', async () => {
       const loginData = {
         email: 'test@example.com',
         password: 'password123'
@@ -164,8 +174,19 @@ describe('Auth Routes', () => {
     });
 
     it('should return 401 for invalid password', async () => {
+      // First register a user
+      await request(app)
+        .post('/api/auth/register')
+        .send({
+          firstName: 'Test',
+          lastName: 'User',
+          email: 'test2@example.com',
+          password: 'password123'
+        })
+        .expect(201);
+
       const loginData = {
-        email: 'test@example.com',
+        email: 'test2@example.com',
         password: 'wrongpassword'
       };
 

@@ -1,10 +1,16 @@
 const User = require('../../models/User');
-const database = require('../../config/database');
+const { initializeTestDatabase, clearDatabase } = require('../../config/testDatabase');
 
 describe('User Model', () => {
+  beforeAll(async () => {
+    // Set up test environment
+    process.env.NODE_ENV = 'test';
+    await initializeTestDatabase();
+  });
+
   beforeEach(async () => {
-    // Initialize database for each test
-    await database.initialize();
+    // Clear database before each test
+    await clearDatabase();
   });
 
   describe('create', () => {
@@ -20,11 +26,11 @@ describe('User Model', () => {
       
       expect(user).toBeDefined();
       expect(user.id).toBeDefined();
-      expect(user.firstName).toBe(userData.firstName);
-      expect(user.lastName).toBe(userData.lastName);
+      expect(user.first_name).toBe(userData.firstName);
+      expect(user.last_name).toBe(userData.lastName);
       expect(user.email).toBe(userData.email);
       expect(user.password).toBe(userData.password);
-      expect(user.createdAt).toBeDefined();
+      expect(user.created_at).toBeDefined();
     });
 
     it('should throw error for duplicate email', async () => {
@@ -101,7 +107,7 @@ describe('User Model', () => {
       const userData = {
         firstName: 'Original',
         lastName: 'Name',
-        email: 'original@example.com',
+        email: 'update-test@example.com',
         password: 'hashedpassword'
       };
 
@@ -113,8 +119,8 @@ describe('User Model', () => {
 
       const updatedUser = await User.update(user.id, updatedData);
       
-      expect(updatedUser.firstName).toBe('Updated');
-      expect(updatedUser.lastName).toBe('Name');
+      expect(updatedUser.first_name).toBe('Updated');
+      expect(updatedUser.last_name).toBe('Name');
       expect(updatedUser.email).toBe(userData.email); // unchanged
     });
 
