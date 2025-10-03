@@ -1,5 +1,5 @@
 import React, { act } from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import axios from 'axios';
 import { AuthProvider, useAuth } from '../contexts/AuthContext-Enhanced';
 
@@ -24,13 +24,12 @@ jest.mock('axios', () => ({
 }));
 
 // Mock localStorage
-const localStorageMock = {
+const createLocalStorageMock = () => ({
   getItem: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
   clear: jest.fn(),
-};
-global.localStorage = localStorageMock;
+});
 
 // Mock console methods to avoid noise in tests
 const originalConsole = {
@@ -54,23 +53,73 @@ const TestComponent = () => {
   );
 };
 
+// Helper function to render with fresh AuthProvider for each test
+const renderWithAuthProvider = () => {
+  return render(
+    <AuthProvider>
+      <TestComponent />
+    </AuthProvider>
+  );
+};
+
 describe('AuthContext-Enhanced', () => {
+  let localStorageMock;
+
   beforeEach(() => {
+    // Cleanup any previous renders FIRST
+    cleanup();
+    
+    // Create fresh localStorage mock for each test
+    localStorageMock = createLocalStorageMock();
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageMock,
+      writable: true
+    });
+    
+    // Clear all mocks completely
     jest.clearAllMocks();
+    
+    // Reset localStorage mock to return null by default
     localStorageMock.getItem.mockReturnValue(null);
     
     // Mock console methods
     console.log = jest.fn();
     console.error = jest.fn();
     
-    // Reset axios defaults
+    // Reset axios defaults completely
     axios.defaults.headers.common = {};
+    delete axios.defaults.headers.common['Authorization'];
+    
+    // Reset axios mocks completely
+    axios.post.mockClear();
+    axios.post.mockReset();
+    axios.interceptors.request.use.mockClear();
+    axios.interceptors.response.use.mockClear();
+    axios.interceptors.request.eject.mockClear();
+    axios.interceptors.response.eject.mockClear();
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    // Cleanup renders and reset everything
+    cleanup();
+    
+    // Wait a tick to ensure cleanup is complete
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
+    
     // Restore console methods
     console.log = originalConsole.log;
     console.error = originalConsole.error;
+    
+    // Clear localStorage completely
+    if (localStorageMock) {
+      localStorageMock.clear();
+    }
+    
+    // Reset axios completely
+    axios.defaults.headers.common = {};
+    delete axios.defaults.headers.common['Authorization'];
   });
 
   it('throws error when useAuth is used outside provider', () => {
@@ -90,11 +139,9 @@ describe('AuthContext-Enhanced', () => {
   });
 
   it('initializes with no token and sets loading to false', async () => {
-    render(
-      <AuthProvider>
-        <TestComponent />
-      </AuthProvider>
-    );
+    await act(async () => {
+      renderWithAuthProvider();
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('user')).toHaveTextContent('No user');
@@ -110,11 +157,9 @@ describe('AuthContext-Enhanced', () => {
     const existingToken = 'existing-jwt-token';
     localStorageMock.getItem.mockReturnValue(existingToken);
 
-    render(
-      <AuthProvider>
-        <TestComponent />
-      </AuthProvider>
-    );
+    await act(async () => {
+      renderWithAuthProvider();
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId('token')).toHaveTextContent(existingToken);
@@ -170,14 +215,18 @@ describe('AuthContext-Enhanced', () => {
       };
       axios.post.mockResolvedValue(mockResponse);
 
-      const { getByTestId } = render(
-        <AuthProvider>
-          <TestComponent />
-        </AuthProvider>
-      );
-
       await act(async () => {
-        getByTestId('login-btn').click();
+        render(
+          <AuthProvider>
+            <TestComponent />
+          </AuthProvider>
+        );
+      });
+
+      const loginBtn = screen.getByTestId('login-btn');
+      
+      await act(async () => {
+        loginBtn.click();
       });
 
       await waitFor(() => {
@@ -204,14 +253,18 @@ describe('AuthContext-Enhanced', () => {
       };
       axios.post.mockRejectedValue(mockError);
 
-      const { getByTestId } = render(
-        <AuthProvider>
-          <TestComponent />
-        </AuthProvider>
-      );
-
       await act(async () => {
-        getByTestId('login-btn').click();
+        render(
+          <AuthProvider>
+            <TestComponent />
+          </AuthProvider>
+        );
+      });
+
+      const loginBtn = screen.getByTestId('login-btn');
+      
+      await act(async () => {
+        loginBtn.click();
       });
 
       await waitFor(() => {
