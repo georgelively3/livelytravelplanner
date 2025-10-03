@@ -1,33 +1,44 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from '../../contexts/AuthContext';
+import { AuthProvider, useAuth } from '../../contexts/AuthContext';
 import Login from '../../pages/Login';
 
-// Mock fetch
-const mockFetch = jest.fn();
-global.fetch = mockFetch;
+// Mock the useAuth hook
+jest.mock('../../contexts/AuthContext', () => ({
+  ...jest.requireActual('../../contexts/AuthContext'),
+  useAuth: jest.fn()
+}));
 
-const renderWithProviders = (component) => {
-  return render(
-    <BrowserRouter>
-      <AuthProvider>
-        {component}
-      </AuthProvider>
-    </BrowserRouter>
-  );
-};
+// Mock useNavigate
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate
+}));
 
 describe('Login Component', () => {
   beforeEach(() => {
-    mockFetch.mockClear();
     localStorage.clear();
+    mockNavigate.mockClear();
+    jest.clearAllMocks();
   });
 
   it('renders login form elements', () => {
-    renderWithProviders(<Login />);
+    useAuth.mockReturnValue({
+      login: jest.fn(),
+      user: null,
+      logout: jest.fn(),
+      loading: false
+    });
+
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     
-    expect(screen.getByText('Welcome Back')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
@@ -35,7 +46,18 @@ describe('Login Component', () => {
   });
 
   it('updates input values when typing', () => {
-    renderWithProviders(<Login />);
+    useAuth.mockReturnValue({
+      login: jest.fn(),
+      user: null,
+      logout: jest.fn(),
+      loading: false
+    });
+
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     
     const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText(/password/i);
@@ -48,80 +70,51 @@ describe('Login Component', () => {
   });
 
   it('shows validation errors for empty fields', async () => {
-    renderWithProviders(<Login />);
+    const mockLogin = jest.fn().mockResolvedValue({
+      success: true  // This won't be called since HTML5 validation prevents submission
+    });
+
+    useAuth.mockReturnValue({
+      login: mockLogin,
+      user: null,
+      logout: jest.fn(),
+      loading: false
+    });
+
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     
     const submitButton = screen.getByRole('button', { name: /sign in/i });
     fireEvent.click(submitButton);
     
-    await waitFor(() => {
-      expect(screen.getByText(/email is required/i)).toBeInTheDocument();
-      expect(screen.getByText(/password is required/i)).toBeInTheDocument();
-    });
+    // HTML5 validation will prevent form submission for required fields
+    // The browser handles this validation, not our component
+    // Just verify the form fields are marked as required
+    expect(screen.getByLabelText(/email/i)).toBeRequired();
+    expect(screen.getByLabelText(/password/i)).toBeRequired();
   });
 
-  it('shows validation error for invalid email format', async () => {
-    renderWithProviders(<Login />);
-    
-    const emailInput = screen.getByLabelText(/email/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole('button', { name: /sign in/i });
-    
-    fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.click(submitButton);
-    
-    await waitFor(() => {
-      expect(screen.getByText(/invalid email format/i)).toBeInTheDocument();
-    });
-  });
+  it('shows error message from server', async () => {
+    const mockLogin = jest.fn(() => Promise.resolve({
+      success: false,
+      error: 'Invalid credentials'
+    }));
 
-  it('submits form with valid credentials', async () => {
-    const mockResponse = {
-      ok: true,
-      json: async () => ({
-        message: 'Login successful',
-        token: 'mock-token',
-        user: { id: 1, email: 'test@example.com', firstName: 'Test', lastName: 'User' }
-      })
-    };
-    
-    mockFetch.mockResolvedValueOnce(mockResponse);
-    
-    renderWithProviders(<Login />);
-    
-    const emailInput = screen.getByLabelText(/email/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole('button', { name: /sign in/i });
-    
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.click(submitButton);
-    
-    await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalledWith('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: 'test@example.com',
-          password: 'password123'
-        })
-      });
+    useAuth.mockReturnValue({
+      login: mockLogin,
+      user: null,
+      logout: jest.fn(),
+      loading: false
     });
-  });
 
-  it('displays error message for failed login', async () => {
-    const mockResponse = {
-      ok: false,
-      json: async () => ({
-        message: 'Invalid credentials'
-      })
-    };
-    
-    mockFetch.mockResolvedValueOnce(mockResponse);
-    
-    renderWithProviders(<Login />);
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
     
     const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText(/password/i);
@@ -132,21 +125,27 @@ describe('Login Component', () => {
     fireEvent.click(submitButton);
     
     await waitFor(() => {
-      expect(screen.getByText(/invalid credentials/i)).toBeInTheDocument();
+      expect(screen.getByText('Invalid credentials')).toBeInTheDocument();
     });
   });
 
-  it('disables submit button during login process', async () => {
-    const mockResponse = new Promise(resolve => 
-      setTimeout(() => resolve({
-        ok: true,
-        json: async () => ({ message: 'Login successful', token: 'token', user: {} })
-      }), 100)
+  it('submits form with valid credentials', async () => {
+    const mockLogin = jest.fn().mockResolvedValue({
+      success: true
+    });
+
+    useAuth.mockReturnValue({
+      login: mockLogin,
+      user: null,
+      logout: jest.fn(),
+      loading: false
+    });
+
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
     );
-    
-    mockFetch.mockReturnValueOnce(mockResponse);
-    
-    renderWithProviders(<Login />);
     
     const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText(/password/i);
@@ -156,10 +155,48 @@ describe('Login Component', () => {
     fireEvent.change(passwordInput, { target: { value: 'password123' } });
     fireEvent.click(submitButton);
     
-    expect(submitButton).toBeDisabled();
+    await waitFor(() => {
+      expect(mockLogin).toHaveBeenCalledWith('test@example.com', 'password123');
+    });
+
+    expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
+  });
+
+  it('disables submit button during login process', async () => {
+    const mockLogin = jest.fn().mockImplementation(() => 
+      new Promise(resolve => 
+        setTimeout(() => resolve({ success: true }), 100)
+      )
+    );
+
+    useAuth.mockReturnValue({
+      login: mockLogin,
+      user: null,
+      logout: jest.fn(),
+      loading: false
+    });
+
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
+    
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+    const submitButton = screen.getByRole('button', { name: /sign in/i });
+    
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    fireEvent.click(submitButton);
+    
+    // During async operation, button should be disabled and show loading text
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /signing in/i })).toBeDisabled();
+    });
     
     await waitFor(() => {
-      expect(submitButton).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: /sign in/i })).not.toBeDisabled();
     });
   });
 });

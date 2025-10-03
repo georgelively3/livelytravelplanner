@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, screen, waitFor, act } from '@testing-library/react';
 import { AuthProvider, useAuth } from '../../contexts/AuthContext';
+import axios from 'axios';
+
+// Mock axios
+jest.mock('axios');
+const mockedAxios = axios;
 
 // Test component to access AuthContext
 const TestComponent = () => {
@@ -21,13 +26,12 @@ const TestComponent = () => {
   );
 };
 
-const mockFetch = jest.fn();
-global.fetch = mockFetch;
-
 describe('AuthContext', () => {
   beforeEach(() => {
-    mockFetch.mockClear();
+    jest.clearAllMocks();
     localStorage.clear();
+    // Reset axios defaults
+    delete mockedAxios.defaults.headers.common['Authorization'];
   });
 
   it('provides initial auth state', () => {
@@ -64,21 +68,20 @@ describe('AuthContext', () => {
   });
 
   it('handles successful login', async () => {
-    const mockResponse = {
-      ok: true,
-      json: async () => ({
+    const mockUserData = {
+      id: 1,
+      firstName: 'Jane',
+      lastName: 'Smith',
+      email: 'jane@example.com'
+    };
+
+    mockedAxios.post.mockResolvedValueOnce({
+      data: {
         message: 'Login successful',
         token: 'mock-token',
-        user: {
-          id: 1,
-          firstName: 'Jane',
-          lastName: 'Smith',
-          email: 'jane@example.com'
-        }
-      })
-    };
-    
-    mockFetch.mockResolvedValueOnce(mockResponse);
+        user: mockUserData
+      }
+    });
     
     render(
       <AuthProvider>
@@ -97,23 +100,18 @@ describe('AuthContext', () => {
     });
     
     expect(localStorage.getItem('token')).toBe('mock-token');
-    expect(JSON.parse(localStorage.getItem('user'))).toEqual({
-      id: 1,
-      firstName: 'Jane',
-      lastName: 'Smith',
-      email: 'jane@example.com'
-    });
+    expect(JSON.parse(localStorage.getItem('user'))).toEqual(mockUserData);
   });
 
   it('handles failed login', async () => {
-    const mockResponse = {
-      ok: false,
-      json: async () => ({
-        message: 'Invalid credentials'
-      })
-    };
-    
-    mockFetch.mockResolvedValueOnce(mockResponse);
+    mockedAxios.post.mockRejectedValueOnce({
+      response: {
+        status: 401,
+        data: {
+          message: 'Invalid credentials'
+        }
+      }
+    });
     
     render(
       <AuthProvider>
@@ -173,16 +171,15 @@ describe('AuthContext', () => {
   it('shows loading state during login', async () => {
     const mockResponse = new Promise(resolve => 
       setTimeout(() => resolve({
-        ok: true,
-        json: async () => ({
+        data: {
           message: 'Login successful',
           token: 'mock-token',
           user: { id: 1, firstName: 'Test', lastName: 'User', email: 'test@example.com' }
-        })
+        }
       }), 100)
     );
     
-    mockFetch.mockReturnValueOnce(mockResponse);
+    mockedAxios.post.mockReturnValueOnce(mockResponse);
     
     render(
       <AuthProvider>
