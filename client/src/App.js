@@ -11,6 +11,8 @@ import Dashboard from './pages/Dashboard';
 import CreateTrip from './pages/CreateTrip';
 import TripDetails from './pages/TripDetails';
 import Profile from './pages/Profile';
+import PersonaBuilder from './pages/PersonaBuilder';
+import ConnectionTest from './pages/ConnectionTest';
 import Loading from './components/Common/Loading';
 
 function App() {
@@ -50,6 +52,11 @@ function App() {
             path="/profile" 
             element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} 
           />
+          <Route 
+            path="/persona-builder" 
+            element={isAuthenticated ? <PersonaBuilder /> : <Navigate to="/login" />} 
+          />
+          <Route path="/test" element={<ConnectionTest />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Container>

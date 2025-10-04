@@ -30,9 +30,12 @@ const Dashboard = () => {
   const fetchTrips = async () => {
     try {
       const response = await axios.get('/api/trips');
-      setTrips(response.data);
+      // The API returns { trips: [...] }, so we need to extract the trips array
+      setTrips(response.data.trips || []);
     } catch (error) {
       console.error('Error fetching trips:', error);
+      // Set empty array on error to prevent map() issues
+      setTrips([]);
     } finally {
       setLoading(false);
     }

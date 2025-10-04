@@ -56,6 +56,13 @@ const Header = () => {
               <Button 
                 color="inherit" 
                 component={Link} 
+                to="/persona-builder"
+              >
+                My Personas
+              </Button>
+              <Button 
+                color="inherit" 
+                component={Link} 
                 to="/profile"
               >
                 {user?.firstName || 'Profile'}
