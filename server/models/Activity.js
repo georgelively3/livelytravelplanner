@@ -19,16 +19,15 @@ class Activity {
 
     const sql = `
       INSERT INTO activities (
-        day_id, title, description, time_slot, start_time, end_time,
-        location, category, cost, reservation_required, accessibility, notes, created_at
+        itinerary_day_id, title, description, start_time, end_time,
+        location, category, cost, notes, created_at
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
     `;
 
     const result = await run(sql, [
-      dayId, title, description, timeSlot, startTime, endTime,
-      location, category, cost, reservationRequired, 
-      JSON.stringify(accessibility), notes
+      dayId, title, description, startTime, endTime,
+      location, category, cost, notes
     ]);
     
     return await this.findById(result.lastID);
@@ -37,7 +36,7 @@ class Activity {
   static async findByDayId(dayId) {
     const sql = `
       SELECT * FROM activities 
-      WHERE day_id = ? 
+      WHERE itinerary_day_id = ? 
       ORDER BY start_time
     `;
     const result = await query(sql, [dayId]);
@@ -83,6 +82,12 @@ class Activity {
     const sql = 'DELETE FROM activities WHERE id = ?';
     const result = await run(sql, [id]);
     return result.changes > 0;
+  }
+
+  static async deleteByDayId(dayId) {
+    const sql = 'DELETE FROM activities WHERE itinerary_day_id = ?';
+    const result = await run(sql, [dayId]);
+    return result.changes;
   }
 }
 

@@ -26,6 +26,12 @@ class ItineraryDay {
     const result = await query(sql, [id]);
     return result.rows[0];
   }
+
+  static async delete(id) {
+    const sql = 'DELETE FROM itinerary_days WHERE id = ?';
+    const result = await run(sql, [id]);
+    return result.changes > 0;
+  }
 }
 
 module.exports = ItineraryDay;

@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CreateTrip from './pages/CreateTrip';
+import AICreateTrip from './pages/AICreateTrip';
 import TripDetails from './pages/TripDetails';
 import Profile from './pages/Profile';
 import PersonaBuilder from './pages/PersonaBuilder';
@@ -43,6 +44,10 @@ function App() {
           <Route 
             path="/create-trip" 
             element={isAuthenticated ? <CreateTrip /> : <Navigate to="/login" />} 
+          />
+          <Route 
+            path="/ai-create-trip" 
+            element={isAuthenticated ? <AICreateTrip /> : <Navigate to="/login" />} 
           />
           <Route 
             path="/trip/:id" 

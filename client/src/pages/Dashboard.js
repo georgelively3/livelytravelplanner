@@ -8,11 +8,15 @@ import {
   Button,
   Box,
   Chip,
-  Fab
+  Fab,
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import AddIcon from '@mui/icons-material/Add';
+import AutoAwesome from '@mui/icons-material/AutoAwesome';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import GroupIcon from '@mui/icons-material/Group';
@@ -51,15 +55,27 @@ const Dashboard = () => {
         <Typography variant="h3" component="h1">
           My Trips
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          component={Link}
-          to="/create-trip"
-          size="large"
-        >
-          Create New Trip
-        </Button>
+        <Box>
+          <Button
+            variant="outlined"
+            startIcon={<AutoAwesome />}
+            component={Link}
+            to="/ai-create-trip"
+            size="large"
+            sx={{ mr: 1 }}
+          >
+            AI Trip
+          </Button>
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            component={Link}
+            to="/create-trip"
+            size="large"
+          >
+            Create New Trip
+          </Button>
+        </Box>
       </Box>
 
       {trips.length === 0 ? (
@@ -78,15 +94,27 @@ const Dashboard = () => {
           <Typography variant="body1" color="text.secondary" mb={3}>
             Start planning your next adventure by creating your first trip
           </Typography>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<AddIcon />}
-            component={Link}
-            to="/create-trip"
-          >
-            Create Your First Trip
-          </Button>
+          <Box>
+            <Button
+              variant="outlined"
+              size="large"
+              startIcon={<AutoAwesome />}
+              component={Link}
+              to="/ai-create-trip"
+              sx={{ mr: 2 }}
+            >
+              AI-Generated Trip
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              startIcon={<AddIcon />}
+              component={Link}
+              to="/create-trip"
+            >
+              Create Manually
+            </Button>
+          </Box>
         </Box>
       ) : (
         <Grid container spacing={4}>
@@ -142,15 +170,24 @@ const Dashboard = () => {
         </Grid>
       )}
 
-      <Fab
-        color="primary"
-        aria-label="create trip"
+      <SpeedDial
+        ariaLabel="Create Trip"
         sx={{ position: 'fixed', bottom: 16, right: 16 }}
-        component={Link}
-        to="/create-trip"
+        icon={<SpeedDialIcon />}
       >
-        <AddIcon />
-      </Fab>
+        <SpeedDialAction
+          icon={<AutoAwesome />}
+          tooltipTitle="AI-Generated Trip"
+          component={Link}
+          to="/ai-create-trip"
+        />
+        <SpeedDialAction
+          icon={<AddIcon />}
+          tooltipTitle="Create Manually"
+          component={Link}
+          to="/create-trip"
+        />
+      </SpeedDial>
     </>
   );
 };

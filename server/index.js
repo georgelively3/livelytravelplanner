@@ -38,6 +38,7 @@ app.use('/api/profiles', require('./routes/profiles'));
 app.use('/api/personas', require('./routes/personas'));
 app.use('/api/activities', require('./routes/activities'));
 app.use('/api/reservations', require('./routes/reservations'));
+app.use('/api/ai', require('./routes/ai'));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
