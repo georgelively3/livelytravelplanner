@@ -41,6 +41,38 @@ global.testUtils = {
     endDate: '2025-12-05',
     numberOfTravelers: 2,
     budget: 1500
+  }),
+
+  createTestPersona: () => ({
+    baseProfileId: 1,
+    personalPreferences: {
+      interests: ['Museums', 'Art Galleries'],
+      cuisineTypes: ['Local', 'Street Food'],
+      relaxationImportance: 5
+    },
+    constraints: {
+      timeConstraints: [],
+      budgetFlexibility: 7
+    },
+    budgetDetails: {
+      totalBudget: '2000',
+      dailyBudget: '200',
+      categoryAllocations: {
+        accommodation: 40,
+        food: 25,
+        activities: 25,
+        transportation: 10
+      }
+    },
+    accessibility: {
+      mobilityNeeds: [],
+      sensoryNeeds: []
+    },
+    groupDynamics: {
+      companions: [],
+      decisionMaker: 'me',
+      pacePreference: 'moderate'
+    }
   })
 };
 

@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const profiles = await TravelerProfile.getAll();
-    res.json(profiles);
+    res.json({ profiles });
   } catch (error) {
     console.error('Error fetching profiles:', error);
     res.status(500).json({ message: 'Server error fetching profiles' });

@@ -178,8 +178,10 @@ const PersonaBuilder = () => {
               Choose Your Base Travel Style
             </Typography>
             <FormControl fullWidth margin="normal">
-              <InputLabel>Base Profile</InputLabel>
+              <InputLabel id="base-profile-label">Base Profile</InputLabel>
               <Select
+                labelId="base-profile-label"
+                id="base-profile-select"
                 value={personaData.baseProfileId}
                 onChange={(e) => setPersonaData(prev => ({ ...prev, baseProfileId: e.target.value }))}
                 label="Base Profile"

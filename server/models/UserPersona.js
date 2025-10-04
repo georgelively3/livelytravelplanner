@@ -65,12 +65,24 @@ class UserPersona {
     const fields = [];
     const values = [];
 
+    // Map camelCase API fields to snake_case database columns
+    const fieldMapping = {
+      'personalPreferences': 'personal_preferences',
+      'constraints': 'constraints',
+      'budgetDetails': 'budget_details',
+      'accessibility': 'accessibility_needs',
+      'groupDynamics': 'group_dynamics',
+      'baseProfileId': 'base_profile_id'
+    };
+
     Object.keys(updateData).forEach(key => {
+      const dbColumn = fieldMapping[key] || key; // Use mapping or original key if not mapped
+      
       if (typeof updateData[key] === 'object') {
-        fields.push(`${key} = ?`);
+        fields.push(`${dbColumn} = ?`);
         values.push(JSON.stringify(updateData[key]));
       } else {
-        fields.push(`${key} = ?`);
+        fields.push(`${dbColumn} = ?`);
         values.push(updateData[key]);
       }
     });

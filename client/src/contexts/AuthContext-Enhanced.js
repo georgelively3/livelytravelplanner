@@ -4,6 +4,9 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
+// Export the context for testing
+export { AuthContext };
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

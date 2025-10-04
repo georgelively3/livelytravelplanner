@@ -7,6 +7,7 @@ const clearDatabase = async () => {
     await run('PRAGMA foreign_keys = OFF');
     
     // Clear all tables in reverse dependency order
+    await run('DELETE FROM user_personas');
     await run('DELETE FROM activities');
     await run('DELETE FROM reservations');
     await run('DELETE FROM itinerary_days');
@@ -15,7 +16,7 @@ const clearDatabase = async () => {
     await run('DELETE FROM users');
     
     // Reset auto-increment counters
-    await run('DELETE FROM sqlite_sequence WHERE name IN ("users", "trips", "traveler_profiles", "itinerary_days", "reservations", "activities")');
+    await run('DELETE FROM sqlite_sequence WHERE name IN ("users", "trips", "traveler_profiles", "itinerary_days", "reservations", "activities", "user_personas")');
     
     // Re-enable foreign key constraints
     await run('PRAGMA foreign_keys = ON');
@@ -40,18 +41,32 @@ const createTables = async () => {
       )
     `);
 
-    // Traveler profiles table
+    // Traveler profiles table - using correct schema to match production
     await run(`
       CREATE TABLE IF NOT EXISTS traveler_profiles (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER,
-        profile_name TEXT NOT NULL,
-        travel_style TEXT,
-        budget_range TEXT,
-        interests TEXT,
+        name TEXT NOT NULL,
+        description TEXT,
+        preferences TEXT,
+        constraints TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // User personas table for enhanced persona system (base_profile_id nullable without FK constraint)
+    await run(`
+      CREATE TABLE IF NOT EXISTS user_personas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        base_profile_id INTEGER,
+        personal_preferences TEXT,
+        constraints TEXT,
+        budget_details TEXT,
         accessibility_needs TEXT,
+        group_dynamics TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id)
       )
     `);
 
@@ -131,8 +146,69 @@ const createTables = async () => {
     `);
 
     console.log('Test database tables created successfully');
+    
+    // Add basic traveler profiles for testing
+    await seedBasicData();
   } catch (error) {
     console.error('Error creating test database tables:', error);
+    throw error;
+  }
+};
+
+// Add basic seed data required for tests
+const seedBasicData = async () => {
+  try {
+    // Add basic traveler profiles that match production schema
+    const profiles = [
+      {
+        name: 'Adventure Seeker',
+        description: 'Loves outdoor activities and thrilling experiences',
+        preferences: JSON.stringify({
+          activities: ['hiking', 'adventure sports', 'nature'],
+          energy_level: 'high',
+          budget: 'medium'
+        }),
+        constraints: JSON.stringify({
+          max_budget: 1000,
+          fitness_required: true
+        })
+      },
+      {
+        name: 'Cultural Explorer',
+        description: 'Interested in history, art, and local culture',
+        preferences: JSON.stringify({
+          activities: ['museums', 'historical sites', 'art'],
+          pace: 'relaxed',
+          budget: 'medium'
+        }),
+        constraints: JSON.stringify({
+          walking_distance: 'moderate'
+        })
+      },
+      {
+        name: 'Relaxation Focused',
+        description: 'Prefers peaceful and relaxing experiences',
+        preferences: JSON.stringify({
+          activities: ['spas', 'beaches', 'quiet venues'],
+          pace: 'slow',
+          budget: 'high'
+        }),
+        constraints: JSON.stringify({
+          noise_level: 'low'
+        })
+      }
+    ];
+
+    for (const profile of profiles) {
+      await run(`
+        INSERT INTO traveler_profiles (name, description, preferences, constraints)
+        VALUES (?, ?, ?, ?)
+      `, [profile.name, profile.description, profile.preferences, profile.constraints]);
+    }
+    
+    console.log('Basic test data seeded successfully');
+  } catch (error) {
+    console.error('Error seeding basic test data:', error);
     throw error;
   }
 };
@@ -140,7 +216,7 @@ const createTables = async () => {
 // Initialize test database
 const initializeTestDatabase = async () => {
   await createTables();
-  await clearDatabase();
+  // Don't clear database after seeding - keep the test data
 };
 
 module.exports = {

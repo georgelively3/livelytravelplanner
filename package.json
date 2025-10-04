@@ -18,7 +18,12 @@
     "test:client:coverage": "cd client && npm run test:coverage",
     "test:e2e": "cypress run",
     "test:e2e:open": "cypress open",
-    "test:all": "npm run test && npm run test:e2e"
+    "test:all": "npm run test && npm run test:e2e",
+    "test:personas": "node test-persona-suite.js",
+    "test:personas:unit": "cd server && npm test tests/models/UserPersona.test.js",
+    "test:personas:api": "cd server && npm test tests/routes/personas.test.js",
+    "test:personas:integration": "cd server && npm test tests/integration/personas.integration.test.js",
+    "test:personas:frontend": "cd client && npm test src/tests/components/PersonaBuilder.test.js"
   },
   "keywords": [
     "travel",
