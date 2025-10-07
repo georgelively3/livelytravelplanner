@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserPersona.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">travel-planner-backend</a> &gt; <a href="index.source.html" class="el_package">com.travelplanner.entity</a> &gt; <span class="el_source">UserPersona.java</span></div><h1>UserPersona.java</h1><pre class="source lang-java linenums">package com.travelplanner.entity;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = &quot;user_personas&quot;)
+public class UserPersona {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;user_id&quot;, nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;base_profile_id&quot;)
+    private TravelerProfile baseProfile;
+
+    @Column(name = &quot;personal_preferences&quot;, columnDefinition = &quot;TEXT&quot;)
+    private String personalPreferences; // JSON string
+
+    @Column(name = &quot;constraints&quot;, columnDefinition = &quot;TEXT&quot;)
+    private String constraints; // JSON string
+
+    @Column(name = &quot;budget_details&quot;, columnDefinition = &quot;TEXT&quot;)
+    private String budgetDetails; // JSON string
+
+    @Column(name = &quot;accessibility_needs&quot;, columnDefinition = &quot;TEXT&quot;)
+    private String accessibilityNeeds; // JSON string
+
+    @Column(name = &quot;group_dynamics&quot;, columnDefinition = &quot;TEXT&quot;)
+    private String groupDynamics; // JSON string
+
+    @Column(name = &quot;created_at&quot;)
+    private LocalDateTime createdAt;
+
+    @Column(name = &quot;updated_at&quot;)
+    private LocalDateTime updatedAt;
+
+<span class="fc" id="L43">    public UserPersona() {}</span>
+
+<span class="nc" id="L45">    public UserPersona(User user, TravelerProfile baseProfile, String personalPreferences,</span>
+                      String constraints, String budgetDetails, String accessibilityNeeds,
+                      String groupDynamics) {
+<span class="nc" id="L48">        this.user = user;</span>
+<span class="nc" id="L49">        this.baseProfile = baseProfile;</span>
+<span class="nc" id="L50">        this.personalPreferences = personalPreferences;</span>
+<span class="nc" id="L51">        this.constraints = constraints;</span>
+<span class="nc" id="L52">        this.budgetDetails = budgetDetails;</span>
+<span class="nc" id="L53">        this.accessibilityNeeds = accessibilityNeeds;</span>
+<span class="nc" id="L54">        this.groupDynamics = groupDynamics;</span>
+<span class="nc" id="L55">        this.createdAt = LocalDateTime.now();</span>
+<span class="nc" id="L56">        this.updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L57">    }</span>
+
+    @PrePersist
+    protected void onCreate() {
+<span class="nc" id="L61">        createdAt = LocalDateTime.now();</span>
+<span class="nc" id="L62">        updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L63">    }</span>
+
+    @PreUpdate
+    protected void onUpdate() {
+<span class="nc" id="L67">        updatedAt = LocalDateTime.now();</span>
+<span class="nc" id="L68">    }</span>
+
+    // Getters and setters
+    public Long getId() {
+<span class="nc" id="L72">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="nc" id="L76">        this.id = id;</span>
+<span class="nc" id="L77">    }</span>
+
+    public User getUser() {
+<span class="nc" id="L80">        return user;</span>
+    }
+
+    public void setUser(User user) {
+<span class="nc" id="L84">        this.user = user;</span>
+<span class="nc" id="L85">    }</span>
+
+    public TravelerProfile getBaseProfile() {
+<span class="nc" id="L88">        return baseProfile;</span>
+    }
+
+    public void setBaseProfile(TravelerProfile baseProfile) {
+<span class="nc" id="L92">        this.baseProfile = baseProfile;</span>
+<span class="nc" id="L93">    }</span>
+
+    public String getPersonalPreferences() {
+<span class="nc" id="L96">        return personalPreferences;</span>
+    }
+
+    public void setPersonalPreferences(String personalPreferences) {
+<span class="nc" id="L100">        this.personalPreferences = personalPreferences;</span>
+<span class="nc" id="L101">    }</span>
+
+    public String getConstraints() {
+<span class="nc" id="L104">        return constraints;</span>
+    }
+
+    public void setConstraints(String constraints) {
+<span class="nc" id="L108">        this.constraints = constraints;</span>
+<span class="nc" id="L109">    }</span>
+
+    public String getBudgetDetails() {
+<span class="nc" id="L112">        return budgetDetails;</span>
+    }
+
+    public void setBudgetDetails(String budgetDetails) {
+<span class="nc" id="L116">        this.budgetDetails = budgetDetails;</span>
+<span class="nc" id="L117">    }</span>
+
+    public String getAccessibilityNeeds() {
+<span class="nc" id="L120">        return accessibilityNeeds;</span>
+    }
+
+    public void setAccessibilityNeeds(String accessibilityNeeds) {
+<span class="nc" id="L124">        this.accessibilityNeeds = accessibilityNeeds;</span>
+<span class="nc" id="L125">    }</span>
+
+    public String getGroupDynamics() {
+<span class="nc" id="L128">        return groupDynamics;</span>
+    }
+
+    public void setGroupDynamics(String groupDynamics) {
+<span class="nc" id="L132">        this.groupDynamics = groupDynamics;</span>
+<span class="nc" id="L133">    }</span>
+
+    public LocalDateTime getCreatedAt() {
+<span class="nc" id="L136">        return createdAt;</span>
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+<span class="nc" id="L140">        this.createdAt = createdAt;</span>
+<span class="nc" id="L141">    }</span>
+
+    public LocalDateTime getUpdatedAt() {
+<span class="nc" id="L144">        return updatedAt;</span>
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+<span class="nc" id="L148">        this.updatedAt = updatedAt;</span>
+<span class="nc" id="L149">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
