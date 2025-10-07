@@ -1,6 +1,6 @@
 package com.travelplanner.config;
 
-import com.travelplanner.entity.TravelerProfile;
+import com.travelplanner.model.TravelerProfile;
 import com.travelplanner.repository.TravelerProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

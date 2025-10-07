@@ -1,7 +1,7 @@
 package com.travelplanner.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.travelplanner.entity.Trip;
+import com.travelplanner.model.Trip;
 import com.travelplanner.service.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

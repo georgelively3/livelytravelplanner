@@ -1,6 +1,6 @@
 package com.travelplanner.service;
 
-import com.travelplanner.entity.User;
+import com.travelplanner.model.User;
 import com.travelplanner.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

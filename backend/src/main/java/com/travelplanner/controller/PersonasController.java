@@ -2,9 +2,9 @@ package com.travelplanner.controller;
 
 import com.travelplanner.dto.UserPersonaRequest;
 import com.travelplanner.dto.UserPersonaResponse;
-import com.travelplanner.entity.TravelerProfile;
-import com.travelplanner.entity.User;
-import com.travelplanner.entity.UserPersona;
+import com.travelplanner.model.TravelerProfile;
+import com.travelplanner.model.User;
+import com.travelplanner.model.UserPersona;
 import com.travelplanner.repository.TravelerProfileRepository;
 import com.travelplanner.repository.UserPersonaRepository;
 import jakarta.validation.Valid;

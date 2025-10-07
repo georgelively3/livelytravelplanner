@@ -1,6 +1,6 @@
 package com.travelplanner.security;
 
-import com.travelplanner.entity.User;
+import com.travelplanner.model.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

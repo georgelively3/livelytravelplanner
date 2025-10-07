@@ -104,7 +104,7 @@
                 <version>0.8.10</version>
                 <configuration>
                     <excludes>
-                        <exclude>**/entity/**</exclude>
+                        <exclude>**/model/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>

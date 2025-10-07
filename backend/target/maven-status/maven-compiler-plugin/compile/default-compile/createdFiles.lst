@@ -1,11 +1,13 @@
 com\travelplanner\repository\UserPersonaRepository.class
 com\travelplanner\repository\UserRepository.class
 com\travelplanner\dto\JwtResponse.class
+com\travelplanner\model\User.class
+com\travelplanner\model\TravelerProfile.class
+com\travelplanner\model\UserPersona.class
 com\travelplanner\controller\PersonasController.class
-com\travelplanner\entity\UserPersona.class
+com\travelplanner\model\Trip.class
 com\travelplanner\service\TripService.class
 com\travelplanner\controller\AuthController.class
-com\travelplanner\entity\User.class
 com\travelplanner\config\DataInitializer.class
 com\travelplanner\TravelPlannerApplication.class
 com\travelplanner\repository\TripRepository.class
@@ -14,10 +16,8 @@ com\travelplanner\controller\TripController.class
 com\travelplanner\controller\ProfilesController.class
 com\travelplanner\dto\SignupRequest.class
 com\travelplanner\config\WebSecurityConfig.class
-com\travelplanner\entity\Trip.class
 com\travelplanner\security\JwtUtils.class
 com\travelplanner\repository\TravelerProfileRepository.class
-com\travelplanner\entity\TravelerProfile.class
 com\travelplanner\security\AuthTokenFilter.class
 com\travelplanner\dto\UserPersonaResponse.class
 com\travelplanner\service\UserDetailsServiceImpl.class

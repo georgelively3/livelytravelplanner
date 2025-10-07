@@ -1,6 +1,6 @@
 package com.travelplanner.service;
 
-import com.travelplanner.entity.User;
+import com.travelplanner.model.User;
 import com.travelplanner.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package com.travelplanner.service;
 
-import com.travelplanner.entity.Trip;
+import com.travelplanner.model.Trip;
 import com.travelplanner.repository.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

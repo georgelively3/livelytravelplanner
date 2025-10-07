@@ -1,6 +1,6 @@
 package com.travelplanner.controller;
 
-import com.travelplanner.entity.Trip;
+import com.travelplanner.model.Trip;
 import com.travelplanner.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

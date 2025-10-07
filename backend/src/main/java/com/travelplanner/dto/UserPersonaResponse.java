@@ -1,6 +1,6 @@
 package com.travelplanner.dto;
 
-import com.travelplanner.entity.UserPersona;
+import com.travelplanner.model.UserPersona;
 
 import java.time.LocalDateTime;
 

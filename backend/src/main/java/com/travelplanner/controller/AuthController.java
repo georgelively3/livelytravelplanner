@@ -3,7 +3,7 @@ package com.travelplanner.controller;
 import com.travelplanner.dto.JwtResponse;
 import com.travelplanner.dto.LoginRequest;
 import com.travelplanner.dto.SignupRequest;
-import com.travelplanner.entity.User;
+import com.travelplanner.model.User;
 import com.travelplanner.repository.UserRepository;
 import com.travelplanner.security.JwtUtils;
 import jakarta.validation.Valid;
