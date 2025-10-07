@@ -71,12 +71,12 @@
       </div>
 
       <!-- Travel Preferences (from user's persona) -->
-      <div class="form-section" *ngIf="userPersona">
+      <div class="form-section" *ngIf="userPersona && baseProfile">
         <h2>Your Travel Profile</h2>
         <div class="persona-preview">
           <div class="persona-info">
-            <h3>{{ userPersona.baseProfile?.name }}</h3>
-            <p>{{ userPersona.baseProfile?.description }}</p>
+            <h3>{{ baseProfile.name }}</h3>
+            <p>{{ baseProfile.description }}</p>
           </div>
           <button type="button" class="btn btn-link" (click)="editProfile()">
             Update Profile

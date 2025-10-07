@@ -2,20 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
-export interface UserPersona {
-  id?: number;
-  baseProfile?: {
-    id: number;
-    name: string;
-    description: string;
-  };
-  personalPreferences?: string;
-  budgetDetails?: string;
-  accessibilityNeeds?: string;
-  groupDynamics?: string;
-  constraints?: string;
-}
+import { PersonaService, UserPersona, TravelerProfile } from '../../services/persona.service';
 
 export interface Trip {
   name: string;
@@ -33,11 +20,13 @@ export interface Trip {
 export class TripPlannerComponent implements OnInit {
   tripForm: FormGroup;
   userPersona: UserPersona | null = null;
+  baseProfile: TravelerProfile | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private personaService: PersonaService
   ) {
     this.tripForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -72,18 +61,37 @@ export class TripPlannerComponent implements OnInit {
   }
 
   private loadUserPersona(): void {
-    // TODO: Implement persona loading from backend
-    // For now, use mock data
-    this.userPersona = {
-      id: 1,
-      baseProfile: {
-        id: 1,
-        name: 'Adventure Seeker',
-        description: 'Loves outdoor activities, hiking, and exploring new places off the beaten path.'
+    this.personaService.getUserPersonas().subscribe({
+      next: (response) => {
+        if (response.personas && response.personas.length > 0) {
+          this.userPersona = response.personas[0]; // Get the first (most recent) persona
+          // Load the base profile details
+          this.loadBaseProfile(this.userPersona.baseProfileId);
+        } else {
+          console.log('No user personas found');
+          this.userPersona = null;
+          this.baseProfile = null;
+        }
       },
-      personalPreferences: 'Outdoor activities, local cuisine, cultural experiences',
-      budgetDetails: 'Mid-range budget, willing to splurge on unique experiences'
-    };
+      error: (error) => {
+        console.error('Error loading user persona:', error);
+        this.userPersona = null;
+        this.baseProfile = null;
+      }
+    });
+  }
+
+  private loadBaseProfile(baseProfileId: number): void {
+    this.personaService.getTravelerProfiles().subscribe({
+      next: (response) => {
+        const profile = response.profiles.find(p => p.id === baseProfileId);
+        this.baseProfile = profile || null;
+      },
+      error: (error) => {
+        console.error('Error loading base profile:', error);
+        this.baseProfile = null;
+      }
+    });
   }
 
   onSubmit(): void {
