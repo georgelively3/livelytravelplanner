@@ -11,7 +11,9 @@ import { ProfileWizardComponent } from './components/profile-wizard/profile-wiza
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthService } from './services/auth.service';
 import { PersonaService } from './services/persona.service';
+import { AiService } from './services/ai.service';
 import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
+import { AiTripSuggestionsComponent } from './components/ai-trip-suggestions/ai-trip-suggestions.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { TripPlannerComponent } from './components/trip-planner/trip-planner.com
     LoginComponent,
     ProfileWizardComponent,
     DashboardComponent,
-    TripPlannerComponent
+    TripPlannerComponent,
+    AiTripSuggestionsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { TripPlannerComponent } from './components/trip-planner/trip-planner.com
   ],
   providers: [
     AuthService,
-    PersonaService
+    PersonaService,
+    AiService
   ],
   bootstrap: [AppComponent]
 })

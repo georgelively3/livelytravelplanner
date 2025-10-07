@@ -2,12 +2,18 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Start Backend Server",
+			"label": "Start Backend Server (Gradle)",
 			"type": "shell",
-			"command": "mvn spring-boot:run",
+			"command": "./gradlew.bat",
+			"args": [
+				":travel-planner-backend:bootRun"
+			],
 			"isBackground": true,
 			"problemMatcher": [],
-			"group": "build"
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
 		},
 		{
 			"label": "Start Frontend Server",
@@ -15,7 +21,10 @@
 			"command": "ng serve",
 			"isBackground": true,
 			"problemMatcher": [],
-			"group": "build"
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			}
 		}
 	]
 }

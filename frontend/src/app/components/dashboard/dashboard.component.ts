@@ -24,4 +24,8 @@ export class DashboardComponent implements OnInit {
   startTripPlanning(): void {
     this.router.navigate(['/plan-trip']);
   }
+
+  goToAISuggestions(): void {
+    this.router.navigate(['/ai-suggestions']);
+  }
 }

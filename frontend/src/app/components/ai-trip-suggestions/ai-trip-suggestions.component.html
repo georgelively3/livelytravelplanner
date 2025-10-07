@@ -1,0 +1,359 @@
+<div class="ai-suggestions-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1 class="page-title">
+      <i class="ai-icon">🤖</i>
+      AI Trip Suggestions
+    </h1>
+    <p class="page-description">
+      Let our AI create personalized travel recommendations based on your preferences and travel style.
+    </p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading AI suggestions...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="error-message">
+    <i class="error-icon">⚠️</i>
+    {{ error }}
+    <button (click)="loadInitialData()" class="retry-btn">Retry</button>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading" class="main-content">
+    
+    <!-- Quick Access Sections -->
+    <div class="quick-access">
+      
+      <!-- Trending Destinations -->
+      <div class="section trending-section" *ngIf="trendingDestinations.length > 0">
+        <h2>🔥 Trending Destinations</h2>
+        <div class="trending-grid">
+          <div 
+            *ngFor="let destination of trendingDestinations.slice(0, 6)" 
+            class="trending-card"
+            (click)="onSelectDestination(destination.destination)">
+            <h3>{{ destination.destination }}</h3>
+            <p class="trending-reason">{{ destination.reason }}</p>
+            <div class="popularity-bar">
+              <div class="popularity-fill" [style.width.%]="destination.popularity * 100"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personalized Suggestions -->
+      <div class="section personalized-section" *ngIf="personalizedSuggestions.length > 0">
+        <h2>✨ Personalized for You</h2>
+        <div class="personalized-grid">
+          <div 
+            *ngFor="let suggestion of personalizedSuggestions.slice(0, 3)" 
+            class="suggestion-card personalized-card"
+            (click)="onSelectSuggestion(suggestion)">
+            <div class="card-header">
+              <h3>{{ suggestion.title }}</h3>
+              <span class="confidence-badge" [class]="getConfidenceColor(suggestion.confidence)">
+                {{ getConfidenceLabel(suggestion.confidence) }}
+              </span>
+            </div>
+            <p class="destination">📍 {{ suggestion.destination }}</p>
+            <p class="description">{{ suggestion.description }}</p>
+            <div class="card-footer">
+              <span class="cost">{{ formatCurrency(suggestion.estimatedCost) }}</span>
+              <span class="duration">{{ suggestion.duration }} days</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Trip Suggestions Form -->
+    <div class="section form-section">
+      <h2>🎯 Generate Custom Suggestions</h2>
+      
+      <form [formGroup]="suggestionForm" class="suggestion-form">
+        <div class="form-grid">
+          
+          <!-- Destination -->
+          <div class="form-group">
+            <label for="destination">Destination (Optional)</label>
+            <input 
+              type="text" 
+              id="destination" 
+              formControlName="destination"
+              placeholder="e.g., Paris, Japan, or leave blank for suggestions"
+              class="form-control">
+            <div class="destination-suggestions" *ngIf="destinationRecommendations.length > 0">
+              <p class="suggestions-label">Recommended for you:</p>
+              <div class="destination-chips">
+                <span 
+                  *ngFor="let dest of destinationRecommendations.slice(0, 5)"
+                  class="destination-chip"
+                  (click)="onSelectDestination(dest)">
+                  {{ dest }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Budget -->
+          <div class="form-group">
+            <label for="budget">Budget (USD)</label>
+            <input 
+              type="number" 
+              id="budget" 
+              formControlName="budget"
+              min="100"
+              class="form-control">
+            <div class="form-hint">Estimated total cost for the entire trip</div>
+          </div>
+
+          <!-- Duration -->
+          <div class="form-group">
+            <label for="duration">Duration (Days)</label>
+            <input 
+              type="number" 
+              id="duration" 
+              formControlName="duration"
+              min="1" 
+              max="30"
+              class="form-control">
+          </div>
+
+          <!-- Number of Travelers -->
+          <div class="form-group">
+            <label for="numberOfTravelers">Number of Travelers</label>
+            <input 
+              type="number" 
+              id="numberOfTravelers" 
+              formControlName="numberOfTravelers"
+              min="1" 
+              max="20"
+              class="form-control">
+          </div>
+
+          <!-- Travel Style -->
+          <div class="form-group">
+            <label for="travelStyle">Travel Style</label>
+            <select id="travelStyle" formControlName="travelStyle" class="form-control">
+              <option value="">Any Style</option>
+              <option value="luxury">Luxury</option>
+              <option value="budget">Budget</option>
+              <option value="adventure">Adventure</option>
+              <option value="relaxation">Relaxation</option>
+              <option value="cultural">Cultural</option>
+              <option value="family">Family</option>
+              <option value="romantic">Romantic</option>
+              <option value="business">Business</option>
+            </select>
+          </div>
+
+          <!-- User Persona -->
+          <div class="form-group" *ngIf="userPersonas.length > 0">
+            <label for="userPersonaId">Travel Persona</label>
+            <select id="userPersonaId" formControlName="userPersonaId" class="form-control">
+              <option value="">No specific persona</option>
+              <option 
+                *ngFor="let persona of userPersonas" 
+                [value]="persona.id">
+                {{ persona.baseProfileName }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Travel Dates -->
+          <div class="form-group">
+            <label for="startDate">Start Date (Optional)</label>
+            <input 
+              type="date" 
+              id="startDate" 
+              formControlName="startDate"
+              class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="endDate">End Date (Optional)</label>
+            <input 
+              type="date" 
+              id="endDate" 
+              formControlName="endDate"
+              class="form-control">
+          </div>
+        </div>
+
+        <!-- Interests Selection -->
+        <div class="interests-section">
+          <label class="section-label">Travel Interests</label>
+          <div class="interests-grid">
+            <span 
+              *ngFor="let interest of travelInterests"
+              class="interest-chip"
+              [class.selected]="isInterestSelected(interest)"
+              (click)="onToggleInterest(interest)">
+              {{ interest }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="form-actions">
+          <button 
+            type="button"
+            (click)="onGenerateSuggestions()"
+            [disabled]="generatingSuggestions"
+            class="generate-btn">
+            <span *ngIf="generatingSuggestions" class="spinner-small"></span>
+            {{ generatingSuggestions ? 'Generating...' : 'Generate AI Suggestions' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Generated Suggestions -->
+    <div class="section results-section" *ngIf="suggestions.length > 0">
+      <h2>🎉 Your AI-Generated Trip Suggestions</h2>
+      
+      <div class="suggestions-grid">
+        <div 
+          *ngFor="let suggestion of suggestions" 
+          class="suggestion-card generated-card"
+          (click)="onSelectSuggestion(suggestion)">
+          
+          <div class="card-header">
+            <h3>{{ suggestion.title }}</h3>
+            <span class="confidence-badge" [class]="getConfidenceColor(suggestion.confidence)">
+              {{ getConfidenceLabel(suggestion.confidence) }}
+            </span>
+          </div>
+          
+          <div class="card-content">
+            <p class="destination">📍 {{ suggestion.destination }}</p>
+            <p class="description">{{ suggestion.description }}</p>
+            
+            <div class="highlights">
+              <span 
+                *ngFor="let highlight of suggestion.highlights.slice(0, 3)" 
+                class="highlight-tag">
+                {{ highlight }}
+              </span>
+            </div>
+            
+            <div class="trip-details">
+              <div class="detail-item">
+                <span class="label">Duration:</span>
+                <span class="value">{{ suggestion.duration }} days</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Cost:</span>
+                <span class="value">{{ formatCurrency(suggestion.estimatedCost) }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Style:</span>
+                <span class="value">{{ suggestion.travelStyle }}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Best Time:</span>
+                <span class="value">{{ suggestion.bestTimeToVisit }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-actions">
+            <button 
+              (click)="onSelectSuggestion(suggestion); $event.stopPropagation()" 
+              class="btn-secondary">
+              View Details
+            </button>
+            <button 
+              (click)="onSaveAsTrip(suggestion); $event.stopPropagation()" 
+              class="btn-primary">
+              Save as Trip
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results Message -->
+    <div class="section no-results" *ngIf="!generatingSuggestions && suggestions.length === 0 && !loading">
+      <div class="no-results-content">
+        <i class="search-icon">🔍</i>
+        <h3>Ready to Discover Amazing Destinations?</h3>
+        <p>Fill out the form above to get personalized AI-powered trip suggestions tailored just for you!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trip Details Modal -->
+  <div class="modal-backdrop" *ngIf="showDetails" (click)="onCloseDetails()">
+    <div class="modal-content" (click)="$event.stopPropagation()" *ngIf="selectedSuggestion">
+      <div class="modal-header">
+        <h2>{{ selectedSuggestion.title }}</h2>
+        <button class="close-btn" (click)="onCloseDetails()">×</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="trip-overview">
+          <h3>Trip Overview</h3>
+          <p class="destination">📍 {{ selectedSuggestion.destination }}</p>
+          <p class="description">{{ selectedSuggestion.description }}</p>
+          
+          <div class="overview-stats">
+            <div class="stat">
+              <span class="stat-label">Duration</span>
+              <span class="stat-value">{{ selectedSuggestion.duration }} days</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Estimated Cost</span>
+              <span class="stat-value">{{ formatCurrency(selectedSuggestion.estimatedCost) }}</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Travel Style</span>
+              <span class="stat-value">{{ selectedSuggestion.travelStyle }}</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Difficulty</span>
+              <span class="stat-value">{{ selectedSuggestion.difficulty }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="trip-highlights" *ngIf="selectedSuggestion.highlights.length > 0">
+          <h3>Highlights</h3>
+          <ul>
+            <li *ngFor="let highlight of selectedSuggestion.highlights">{{ highlight }}</li>
+          </ul>
+        </div>
+
+        <div class="trip-activities" *ngIf="selectedSuggestion.activities.length > 0">
+          <h3>Recommended Activities</h3>
+          <div class="activities-list">
+            <div *ngFor="let activity of selectedSuggestion.activities.slice(0, 5)" class="activity-item">
+              <h4>{{ activity.name }}</h4>
+              <p>{{ activity.description }}</p>
+              <div class="activity-details">
+                <span class="activity-duration">⏱️ {{ activity.duration }}</span>
+                <span class="activity-cost">💰 {{ formatCurrency(activity.cost) }}</span>
+                <span class="activity-time">🕐 {{ activity.timeOfDay }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="best-time" *ngIf="selectedSuggestion.bestTimeToVisit">
+          <h3>Best Time to Visit</h3>
+          <p>{{ selectedSuggestion.bestTimeToVisit }}</p>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button (click)="onCloseDetails()" class="btn-secondary">Close</button>
+        <button (click)="onSaveAsTrip(selectedSuggestion)" class="btn-primary">Save as Trip</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -97,6 +97,50 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.btn-ai {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ai::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-ai:hover::before {
+  left: 100%;
+}
+
+.btn-ai:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 154, 158, 0.4);
+}
+
+.ai-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}
+
+.ai-card .action-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
 .btn-outline {
   background: transparent;
   color: #667eea;

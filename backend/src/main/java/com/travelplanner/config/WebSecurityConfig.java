@@ -59,6 +59,7 @@ public class WebSecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/api/ai/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/api/health")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                 .requestMatchers(new AntPathRequestMatcher("/error")).permitAll()

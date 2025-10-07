@@ -1,6 +1,6 @@
 plugins {
-    id("org.springframework.boot")
-    id("io.spring.dependency-management")
+    id("org.springframework.boot") version "3.1.5"
+    id("io.spring.dependency-management") version "1.1.3"
     id("java")
     id("jacoco")
 }
@@ -48,7 +48,7 @@ jacoco {
 }
 
 tasks.jacocoTestReport {
-    dependsOn(tasks.test)
+    dependsOn(tasks.test, tasks.compileJava, tasks.processResources)
     
     reports {
         xml.required.set(true)

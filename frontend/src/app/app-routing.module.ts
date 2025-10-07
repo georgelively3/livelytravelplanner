@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileWizardComponent } from './components/profile-wizard/profile-wizard.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
+import { AiTripSuggestionsComponent } from './components/ai-trip-suggestions/ai-trip-suggestions.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'profile-wizard', component: ProfileWizardComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'plan-trip', component: TripPlannerComponent },
+  { path: 'ai-suggestions', component: AiTripSuggestionsComponent },
   { path: '**', redirectTo: '/' }
 ];
 
