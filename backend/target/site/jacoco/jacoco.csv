@@ -1,8 +1,8 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-travel-planner-backend,com.travelplanner.controller,AuthController,102,0,2,0,26,0,5,0,4,0
+travel-planner-backend,com.travelplanner.controller,AuthController,117,0,2,0,30,0,5,0,4,0
 travel-planner-backend,com.travelplanner.controller,PersonasController,254,0,32,0,70,0,22,0,6,0
 travel-planner-backend,com.travelplanner.controller,TripController,0,72,0,0,0,20,0,8,0,8
-travel-planner-backend,com.travelplanner.controller,HealthController,0,30,0,0,0,7,0,2,0,2
+travel-planner-backend,com.travelplanner.controller,HealthController,30,0,0,0,7,0,2,0,2,0
 travel-planner-backend,com.travelplanner.controller,ProfilesController,44,0,2,0,11,0,4,0,3,0
 travel-planner-backend,com.travelplanner,TravelPlannerApplication,5,3,0,0,2,1,1,1,1,1
 travel-planner-backend,com.travelplanner.config,DataInitializer,101,0,4,0,24,0,5,0,3,0

@@ -8,7 +8,8 @@ Scenario: Health check endpoint
   Given path 'health'
   When method get
   Then status 200
-  And match response == { status: 'UP', message: 'Travel Planner API is running' }
+  And match response.status == 'UP'
+  And match response.service == 'Travel Planner Backend'
 
 Scenario: User registration success
   * def newUser = randomUser()

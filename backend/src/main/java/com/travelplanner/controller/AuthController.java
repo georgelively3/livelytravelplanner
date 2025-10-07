@@ -8,8 +8,10 @@ import com.travelplanner.repository.UserRepository;
 import com.travelplanner.security.JwtUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,20 +39,25 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtUtils.generateJwtToken((User) authentication.getPrincipal());
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken((User) authentication.getPrincipal());
+            User userDetails = (User) authentication.getPrincipal();
 
-        User userDetails = (User) authentication.getPrincipal();
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getEmail(),
-                userDetails.getFirstName(),
-                userDetails.getLastName()));
+            return ResponseEntity.ok(new JwtResponse(jwt,
+                    userDetails.getId(),
+                    userDetails.getEmail(),
+                    userDetails.getFirstName(),
+                    userDetails.getLastName()));
+        } catch (BadCredentialsException e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Error: Invalid credentials!");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
     }
 
     @PostMapping("/signup")
@@ -58,7 +65,7 @@ public class AuthController {
         Map<String, String> response = new HashMap<>();
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            response.put("message", "Error: Email is already taken!");
+            response.put("message", "Error: Email is already in use!");
             return ResponseEntity.badRequest().body(response);
         }
 

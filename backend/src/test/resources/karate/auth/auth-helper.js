@@ -10,18 +10,32 @@ function() {
     };
     
     // Register user
-    var signupResponse = karate.call('classpath:karate/auth/signup.feature', testUser);
+    var signupRequest = karate.call('signup.feature', testUser);
     
     // Login and get token  
-    var loginResponse = karate.call('classpath:karate/auth/login.feature', { 
+    var loginRequest = karate.call('login.feature', { 
       email: testUser.email, 
       password: testUser.password 
     });
     
-    return loginResponse.response.accessToken;
+    return loginRequest.response.accessToken;
+  }
+  
+  function signupUser(userDetails) {
+    karate.configure('url', karate.properties['baseUrl']);
+    var response = karate.call('classpath:karate/auth/signup.feature', userDetails);
+    return response;
+  }
+  
+  function loginUser(credentials) {
+    karate.configure('url', karate.properties['baseUrl']);
+    var response = karate.call('classpath:karate/auth/login.feature', credentials);
+    return response;
   }
   
   return {
-    getAuthToken: getAuthToken
+    getAuthToken: getAuthToken,
+    signupUser: signupUser,
+    loginUser: loginUser
   };
 }

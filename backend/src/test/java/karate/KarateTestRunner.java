@@ -11,6 +11,11 @@ import com.intuit.karate.junit5.Karate;
 class KarateTestRunner {
     
     @Karate.Test
+    Karate testHealth() {
+        return Karate.run("classpath:karate/health-test.feature").relativeTo(getClass());
+    }
+    
+    @Karate.Test
     Karate testSetupOnly() {
         return Karate.run("classpath:karate/setup-test.feature").relativeTo(getClass());
     }
