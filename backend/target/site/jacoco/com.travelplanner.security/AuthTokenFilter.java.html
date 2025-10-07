@@ -29,8 +29,8 @@ import java.io.IOException;
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
-<span class="fc" id="L32">            String jwt = parseJwt(request);</span>
-<span class="pc bpc" id="L33" title="3 of 4 branches missed.">            if (jwt != null &amp;&amp; jwtUtils.validateJwtToken(jwt)) {</span>
+<span class="nc" id="L32">            String jwt = parseJwt(request);</span>
+<span class="nc bnc" id="L33" title="All 4 branches missed.">            if (jwt != null &amp;&amp; jwtUtils.validateJwtToken(jwt)) {</span>
 <span class="nc" id="L34">                String username = jwtUtils.getUserNameFromJwtToken(jwt);</span>
 
 <span class="nc" id="L36">                UserDetails userDetails = userDetailsService.loadUserByUsername(username);</span>
@@ -42,19 +42,19 @@ import java.io.IOException;
             }
 <span class="nc" id="L43">        } catch (Exception e) {</span>
 <span class="nc" id="L44">            logger.error(&quot;Cannot set user authentication: &quot;, e);</span>
-        }
+<span class="nc" id="L45">        }</span>
 
-<span class="fc" id="L47">        filterChain.doFilter(request, response);</span>
-<span class="fc" id="L48">    }</span>
+<span class="nc" id="L47">        filterChain.doFilter(request, response);</span>
+<span class="nc" id="L48">    }</span>
 
     private String parseJwt(HttpServletRequest request) {
-<span class="fc" id="L51">        String headerAuth = request.getHeader(&quot;Authorization&quot;);</span>
+<span class="nc" id="L51">        String headerAuth = request.getHeader(&quot;Authorization&quot;);</span>
 
-<span class="pc bpc" id="L53" title="3 of 4 branches missed.">        if (StringUtils.hasText(headerAuth) &amp;&amp; headerAuth.startsWith(&quot;Bearer &quot;)) {</span>
+<span class="nc bnc" id="L53" title="All 4 branches missed.">        if (StringUtils.hasText(headerAuth) &amp;&amp; headerAuth.startsWith(&quot;Bearer &quot;)) {</span>
 <span class="nc" id="L54">            return headerAuth.substring(7);</span>
         }
 
-<span class="fc" id="L57">        return null;</span>
+<span class="nc" id="L57">        return null;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

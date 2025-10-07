@@ -16,42 +16,42 @@ import java.util.Optional;
     private TripRepository tripRepository;
     
     public List&lt;Trip&gt; getAllTrips() {
-<span class="nc" id="L19">        return tripRepository.findAll();</span>
+<span class="fc" id="L19">        return tripRepository.findAll();</span>
     }
     
     public Optional&lt;Trip&gt; getTripById(Long id) {
-<span class="nc" id="L23">        return tripRepository.findById(id);</span>
+<span class="fc" id="L23">        return tripRepository.findById(id);</span>
     }
     
     public Trip createTrip(Trip trip) {
-<span class="nc" id="L27">        return tripRepository.save(trip);</span>
+<span class="fc" id="L27">        return tripRepository.save(trip);</span>
     }
     
     public Trip updateTrip(Long id, Trip tripDetails) {
-<span class="nc" id="L31">        Trip trip = tripRepository.findById(id)</span>
-<span class="nc" id="L32">                .orElseThrow(() -&gt; new RuntimeException(&quot;Trip not found with id: &quot; + id));</span>
+<span class="fc" id="L31">        Trip trip = tripRepository.findById(id)</span>
+<span class="fc" id="L32">                .orElseThrow(() -&gt; new RuntimeException(&quot;Trip not found with id: &quot; + id));</span>
         
-<span class="nc" id="L34">        trip.setName(tripDetails.getName());</span>
-<span class="nc" id="L35">        trip.setDescription(tripDetails.getDescription());</span>
-<span class="nc" id="L36">        trip.setStartDate(tripDetails.getStartDate());</span>
-<span class="nc" id="L37">        trip.setEndDate(tripDetails.getEndDate());</span>
-<span class="nc" id="L38">        trip.setDestination(tripDetails.getDestination());</span>
+<span class="fc" id="L34">        trip.setName(tripDetails.getName());</span>
+<span class="fc" id="L35">        trip.setDescription(tripDetails.getDescription());</span>
+<span class="fc" id="L36">        trip.setStartDate(tripDetails.getStartDate());</span>
+<span class="fc" id="L37">        trip.setEndDate(tripDetails.getEndDate());</span>
+<span class="fc" id="L38">        trip.setDestination(tripDetails.getDestination());</span>
         
-<span class="nc" id="L40">        return tripRepository.save(trip);</span>
+<span class="fc" id="L40">        return tripRepository.save(trip);</span>
     }
     
     public void deleteTrip(Long id) {
-<span class="nc" id="L44">        Trip trip = tripRepository.findById(id)</span>
-<span class="nc" id="L45">                .orElseThrow(() -&gt; new RuntimeException(&quot;Trip not found with id: &quot; + id));</span>
-<span class="nc" id="L46">        tripRepository.delete(trip);</span>
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L44">        Trip trip = tripRepository.findById(id)</span>
+<span class="fc" id="L45">                .orElseThrow(() -&gt; new RuntimeException(&quot;Trip not found with id: &quot; + id));</span>
+<span class="fc" id="L46">        tripRepository.delete(trip);</span>
+<span class="fc" id="L47">    }</span>
     
     public List&lt;Trip&gt; searchTripsByDestination(String destination) {
-<span class="nc" id="L50">        return tripRepository.findByDestinationContainingIgnoreCase(destination);</span>
+<span class="fc" id="L50">        return tripRepository.findByDestinationContainingIgnoreCase(destination);</span>
     }
     
     public List&lt;Trip&gt; getUpcomingTrips() {
-<span class="nc" id="L54">        return tripRepository.findByStartDateAfter(LocalDate.now());</span>
+<span class="fc" id="L54">        return tripRepository.findByStartDateAfter(LocalDate.now());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
