@@ -3,6 +3,32 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+.home-header {
+  position: relative;
+  z-index: 10;
+  padding: 20px 40px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo h2 {
+  color: white;
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 15px;
+}
+
 .hero-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -120,6 +146,17 @@
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-outline:hover {
+  background: white;
+  color: #667eea;
 }
 
 @media (max-width: 768px) {

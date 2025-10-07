@@ -27,7 +27,11 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     } else {
       // Show login/signup options
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/login']);
     }
+  }
+
+  onLogin(): void {
+    this.router.navigate(['/login']);
   }
 }

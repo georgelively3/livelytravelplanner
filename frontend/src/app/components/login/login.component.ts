@@ -77,6 +77,8 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
           this.successMessage = 'Login successful!';
           setTimeout(() => {
+            // For now, always redirect to dashboard after login
+            // TODO: Check if user has a profile and redirect to profile-wizard if needed
             this.router.navigate(['/dashboard']);
           }, 1000);
         },
@@ -105,12 +107,25 @@ export class LoginComponent implements OnInit {
       this.authService.signup(signupData).subscribe({
         next: (response) => {
           this.isLoading = false;
-          this.successMessage = 'Account created successfully! You can now log in.';
+          this.successMessage = 'Account created successfully! Logging you in...';
+          
+          // Auto-login after successful signup
           setTimeout(() => {
-            this.isSignupMode = false;
-            this.signupForm.reset();
-            this.successMessage = '';
-          }, 2000);
+            this.authService.login({
+              email: signupData.email,
+              password: signupData.password
+            }).subscribe({
+              next: (loginResponse) => {
+                this.router.navigate(['/profile-wizard']);
+              },
+              error: (loginError) => {
+                this.errorMessage = 'Account created but login failed. Please try logging in manually.';
+                this.isSignupMode = false;
+                this.signupForm.reset();
+                this.successMessage = '';
+              }
+            });
+          }, 1000);
         },
         error: (error) => {
           this.isLoading = false;

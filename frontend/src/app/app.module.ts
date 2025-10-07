@@ -10,6 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileWizardComponent } from './components/profile-wizard/profile-wizard.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthService } from './services/auth.service';
+import { PersonaService } from './services/persona.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AuthService } from './services/auth.service';
     ReactiveFormsModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    PersonaService
   ],
   bootstrap: [AppComponent]
 })

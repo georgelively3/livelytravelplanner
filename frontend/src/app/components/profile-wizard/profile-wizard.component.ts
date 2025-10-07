@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { PersonaService, UserPersonaRequest } from '../../services/persona.service';
 
 interface TravelerProfile {
   id: number;
@@ -79,6 +80,7 @@ export class ProfileWizardComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private personaService: PersonaService,
     private router: Router
   ) {
     this.profileForm = this.formBuilder.group({
@@ -144,25 +146,33 @@ export class ProfileWizardComponent implements OnInit {
       this.isLoading = true;
       this.errorMessage = '';
 
-      const profileData = {
+      // Map form data to the format expected by the API
+      const personaRequest: UserPersonaRequest = {
         baseProfileId: this.profileForm.value.selectedProfile,
-        preferences: {
+        personalPreferences: JSON.stringify({
           travelCompanion: this.profileForm.value.travelCompanion,
-          budgetRange: this.profileForm.value.budgetRange,
           travelFrequency: this.profileForm.value.travelFrequency,
           preferredDestinations: this.profileForm.value.preferredDestinations,
           additionalInfo: this.profileForm.value.additionalInfo
-        }
+        }),
+        budgetDetails: this.profileForm.value.budgetRange,
+        groupDynamics: this.profileForm.value.travelCompanion
       };
 
-      // Call API to save user persona (you'll need to implement this in the service)
-      console.log('Profile data to save:', profileData);
-      
-      // For now, simulate success and navigate to dashboard
-      setTimeout(() => {
-        this.isLoading = false;
-        this.router.navigate(['/dashboard']);
-      }, 1000);
+      this.personaService.createPersona(personaRequest).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          console.log('Profile created successfully:', response);
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          console.error('Error creating profile:', error);
+          this.errorMessage = error.error?.message || 'Failed to create profile. Please try again.';
+        }
+      });
+    } else {
+      this.errorMessage = 'Please complete all required fields.';
     }
   }
 
