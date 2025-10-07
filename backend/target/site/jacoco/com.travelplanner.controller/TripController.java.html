@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TripController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">travel-planner-backend</a> &gt; <a href="index.source.html" class="el_package">com.travelplanner.controller</a> &gt; <span class="el_source">TripController.java</span></div><h1>TripController.java</h1><pre class="source lang-java linenums">package com.travelplanner.controller;
+
+import com.travelplanner.model.Trip;
+import com.travelplanner.service.TripService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/api/trips&quot;)
+@CrossOrigin(origins = &quot;http://localhost:4200&quot;)
+<span class="fc" id="L17">public class TripController {</span>
+    
+    @Autowired
+    private TripService tripService;
+    
+    @GetMapping
+    public ResponseEntity&lt;List&lt;Trip&gt;&gt; getAllTrips() {
+<span class="fc" id="L24">        List&lt;Trip&gt; trips = tripService.getAllTrips();</span>
+<span class="fc" id="L25">        return ResponseEntity.ok(trips);</span>
+    }
+    
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Trip&gt; getTripById(@PathVariable Long id) {
+<span class="fc" id="L30">        Optional&lt;Trip&gt; trip = tripService.getTripById(id);</span>
+<span class="fc" id="L31">        return trip.map(ResponseEntity::ok)</span>
+<span class="fc" id="L32">                  .orElse(ResponseEntity.notFound().build());</span>
+    }
+    
+    @PostMapping
+    public ResponseEntity&lt;Trip&gt; createTrip(@Valid @RequestBody Trip trip) {
+<span class="fc" id="L37">        Trip savedTrip = tripService.createTrip(trip);</span>
+<span class="fc" id="L38">        return ResponseEntity.status(HttpStatus.CREATED).body(savedTrip);</span>
+    }
+    
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Trip&gt; updateTrip(@PathVariable Long id, @Valid @RequestBody Trip tripDetails) {
+        try {
+<span class="fc" id="L44">            Trip updatedTrip = tripService.updateTrip(id, tripDetails);</span>
+<span class="fc" id="L45">            return ResponseEntity.ok(updatedTrip);</span>
+<span class="fc" id="L46">        } catch (RuntimeException e) {</span>
+<span class="fc" id="L47">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+    
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteTrip(@PathVariable Long id) {
+        try {
+<span class="fc" id="L54">            tripService.deleteTrip(id);</span>
+<span class="fc" id="L55">            return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L56">        } catch (RuntimeException e) {</span>
+<span class="fc" id="L57">            return ResponseEntity.notFound().build();</span>
+        }
+    }
+    
+    @GetMapping(&quot;/search&quot;)
+    public ResponseEntity&lt;List&lt;Trip&gt;&gt; searchTrips(@RequestParam String destination) {
+<span class="fc" id="L63">        List&lt;Trip&gt; trips = tripService.searchTripsByDestination(destination);</span>
+<span class="fc" id="L64">        return ResponseEntity.ok(trips);</span>
+    }
+    
+    @GetMapping(&quot;/upcoming&quot;)
+    public ResponseEntity&lt;List&lt;Trip&gt;&gt; getUpcomingTrips() {
+<span class="fc" id="L69">        List&lt;Trip&gt; trips = tripService.getUpcomingTrips();</span>
+<span class="fc" id="L70">        return ResponseEntity.ok(trips);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -68,7 +68,7 @@ class TripControllerTest {
         when(tripService.getAllTrips()).thenReturn(trips);
         
         // When & Then
-        mockMvc.perform(get("/trips"))
+        mockMvc.perform(get("/api/trips"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
@@ -87,7 +87,7 @@ class TripControllerTest {
         when(tripService.getAllTrips()).thenReturn(Collections.emptyList());
         
         // When & Then
-        mockMvc.perform(get("/trips"))
+        mockMvc.perform(get("/api/trips"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
@@ -102,7 +102,7 @@ class TripControllerTest {
         when(tripService.getTripById(1L)).thenReturn(Optional.of(sampleTrip));
         
         // When & Then
-        mockMvc.perform(get("/trips/1"))
+        mockMvc.perform(get("/api/trips/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1))
@@ -118,7 +118,7 @@ class TripControllerTest {
         when(tripService.getTripById(999L)).thenReturn(Optional.empty());
         
         // When & Then
-        mockMvc.perform(get("/trips/999"))
+        mockMvc.perform(get("/api/trips/999"))
                 .andExpect(status().isNotFound());
         
         verify(tripService).getTripById(999L);
@@ -145,7 +145,7 @@ class TripControllerTest {
         when(tripService.createTrip(any(Trip.class))).thenReturn(savedTrip);
         
         // When & Then
-        mockMvc.perform(post("/trips")
+        mockMvc.perform(post("/api/trips")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(newTrip)))
                 .andExpect(status().isCreated())
@@ -171,7 +171,7 @@ class TripControllerTest {
         when(tripService.updateTrip(eq(1L), any(Trip.class))).thenReturn(updatedTrip);
         
         // When & Then
-        mockMvc.perform(put("/trips/1")
+        mockMvc.perform(put("/api/trips/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updatedTrip)))
                 .andExpect(status().isOk())
@@ -196,7 +196,7 @@ class TripControllerTest {
                 .thenThrow(new RuntimeException("Trip not found"));
         
         // When & Then
-        mockMvc.perform(put("/trips/999")
+        mockMvc.perform(put("/api/trips/999")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(tripDetails)))
                 .andExpect(status().isNotFound());
@@ -210,7 +210,7 @@ class TripControllerTest {
         doNothing().when(tripService).deleteTrip(1L);
         
         // When & Then
-        mockMvc.perform(delete("/trips/1"))
+        mockMvc.perform(delete("/api/trips/1"))
                 .andExpect(status().isNoContent());
         
         verify(tripService).deleteTrip(1L);
@@ -222,7 +222,7 @@ class TripControllerTest {
         doThrow(new RuntimeException("Trip not found")).when(tripService).deleteTrip(999L);
         
         // When & Then
-        mockMvc.perform(delete("/trips/999"))
+        mockMvc.perform(delete("/api/trips/999"))
                 .andExpect(status().isNotFound());
         
         verify(tripService).deleteTrip(999L);
@@ -235,7 +235,7 @@ class TripControllerTest {
         when(tripService.searchTripsByDestination("Tokyo")).thenReturn(matchingTrips);
         
         // When & Then
-        mockMvc.perform(get("/trips/search")
+        mockMvc.perform(get("/api/trips/search")
                 .param("destination", "Tokyo"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -252,7 +252,7 @@ class TripControllerTest {
         when(tripService.searchTripsByDestination("NonExistentPlace")).thenReturn(Collections.emptyList());
         
         // When & Then
-        mockMvc.perform(get("/trips/search")
+        mockMvc.perform(get("/api/trips/search")
                 .param("destination", "NonExistentPlace"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -275,7 +275,7 @@ class TripControllerTest {
         when(tripService.getUpcomingTrips()).thenReturn(upcomingTrips);
         
         // When & Then
-        mockMvc.perform(get("/trips/upcoming"))
+        mockMvc.perform(get("/api/trips/upcoming"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
@@ -291,7 +291,7 @@ class TripControllerTest {
         when(tripService.getUpcomingTrips()).thenReturn(Collections.emptyList());
         
         // When & Then
-        mockMvc.perform(get("/trips/upcoming"))
+        mockMvc.perform(get("/api/trips/upcoming"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())

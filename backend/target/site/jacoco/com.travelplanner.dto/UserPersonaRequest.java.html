@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserPersonaRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">travel-planner-backend</a> &gt; <a href="index.source.html" class="el_package">com.travelplanner.dto</a> &gt; <span class="el_source">UserPersonaRequest.java</span></div><h1>UserPersonaRequest.java</h1><pre class="source lang-java linenums">package com.travelplanner.dto;
+
+import jakarta.validation.constraints.NotNull;
+
+<span class="fc" id="L5">public class UserPersonaRequest {</span>
+    @NotNull
+    private Long baseProfileId;
+    
+    private String personalPreferences; // JSON string
+    private String constraints; // JSON string  
+    private String budgetDetails; // JSON string
+    private String accessibilityNeeds; // JSON string
+    private String groupDynamics; // JSON string
+
+    public Long getBaseProfileId() {
+<span class="fc" id="L16">        return baseProfileId;</span>
+    }
+
+    public void setBaseProfileId(Long baseProfileId) {
+<span class="fc" id="L20">        this.baseProfileId = baseProfileId;</span>
+<span class="fc" id="L21">    }</span>
+
+    public String getPersonalPreferences() {
+<span class="fc" id="L24">        return personalPreferences;</span>
+    }
+
+    public void setPersonalPreferences(String personalPreferences) {
+<span class="fc" id="L28">        this.personalPreferences = personalPreferences;</span>
+<span class="fc" id="L29">    }</span>
+
+    public String getConstraints() {
+<span class="fc" id="L32">        return constraints;</span>
+    }
+
+    public void setConstraints(String constraints) {
+<span class="fc" id="L36">        this.constraints = constraints;</span>
+<span class="fc" id="L37">    }</span>
+
+    public String getBudgetDetails() {
+<span class="fc" id="L40">        return budgetDetails;</span>
+    }
+
+    public void setBudgetDetails(String budgetDetails) {
+<span class="fc" id="L44">        this.budgetDetails = budgetDetails;</span>
+<span class="fc" id="L45">    }</span>
+
+    public String getAccessibilityNeeds() {
+<span class="fc" id="L48">        return accessibilityNeeds;</span>
+    }
+
+    public void setAccessibilityNeeds(String accessibilityNeeds) {
+<span class="fc" id="L52">        this.accessibilityNeeds = accessibilityNeeds;</span>
+<span class="fc" id="L53">    }</span>
+
+    public String getGroupDynamics() {
+<span class="fc" id="L56">        return groupDynamics;</span>
+    }
+
+    public void setGroupDynamics(String groupDynamics) {
+<span class="fc" id="L60">        this.groupDynamics = groupDynamics;</span>
+<span class="fc" id="L61">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
