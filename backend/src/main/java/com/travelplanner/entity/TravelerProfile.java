@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
+@Entity(name = "TravelerProfile")
 @Table(name = "traveler_profiles")
 @Data
 @NoArgsConstructor

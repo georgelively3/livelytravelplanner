@@ -1,2 +1,12 @@
-com\travelplanner\entity\UserTest.class
+com\travelplanner\controller\PersonasControllerTest.class
+com\travelplanner\dto\JwtResponseTest.class
+com\travelplanner\controller\HealthControllerTest.class
+com\travelplanner\controller\ProfilesControllerTest.class
+com\travelplanner\controller\TripControllerTest.class
 com\travelplanner\security\JwtUtilsTest.class
+com\travelplanner\service\UserDetailsServiceImplTest.class
+com\travelplanner\service\TripServiceTest.class
+karate\KarateTestRunner.class
+com\travelplanner\dto\LoginRequestTest.class
+com\travelplanner\entity\UserTest.class
+com\travelplanner\security\AuthTokenFilterTest.class

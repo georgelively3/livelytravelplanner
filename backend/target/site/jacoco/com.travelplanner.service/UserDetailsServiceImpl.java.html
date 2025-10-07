@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-<span class="fc" id="L13">public class UserDetailsServiceImpl implements UserDetailsService {</span>
+<span class="nc" id="L13">public class UserDetailsServiceImpl implements UserDetailsService {</span>
     @Autowired
     UserRepository userRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-<span class="fc" id="L20">        User user = userRepository.findByEmail(username)</span>
-<span class="fc" id="L21">                .orElseThrow(() -&gt; new UsernameNotFoundException(&quot;User Not Found with email: &quot; + username));</span>
+<span class="nc" id="L20">        User user = userRepository.findByEmail(username)</span>
+<span class="nc" id="L21">                .orElseThrow(() -&gt; new UsernameNotFoundException(&quot;User Not Found with email: &quot; + username));</span>
 
-<span class="fc" id="L23">        return user;</span>
+<span class="nc" id="L23">        return user;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
