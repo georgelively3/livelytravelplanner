@@ -101,10 +101,10 @@ class CleanStartManager {
       try {
         if (this.isWindows) {
           // Windows: Find and kill processes on port
-          await this.runCommand(`for /f "tokens=5" %a in ('netstat -aon ^| findstr :${port}') do taskkill /f /pid %a`, { silent: true });
+          await this.runCommand(`for /f "tokens=5" %a in ('netstat -aon ^| findstr :${port} 2^>nul') do taskkill /f /pid %a 2>nul || echo No process on port ${port}`, { silent: true });
         } else {
           // Unix: Find and kill processes on port
-          await this.runCommand(`lsof -ti:${port} | xargs kill -9`, { silent: true });
+          await this.runCommand(`lsof -ti:${port} | xargs kill -9 || echo No process on port ${port}`, { silent: true });
         }
         this.log(`✅ Cleared port ${port}`);
       } catch (error) {
@@ -116,9 +116,9 @@ class CleanStartManager {
     // Additional cleanup for Node.js processes
     try {
       if (this.isWindows) {
-        await this.runCommand('taskkill /f /im node.exe', { silent: true });
+        await this.runCommand('taskkill /f /im node.exe 2>nul || echo No Node processes found', { silent: true });
       } else {
-        await this.runCommand('pkill -f node', { silent: true });
+        await this.runCommand('pkill -f node || echo No Node processes found', { silent: true });
       }
       this.log('✅ Killed existing Node.js processes');
     } catch (error) {
