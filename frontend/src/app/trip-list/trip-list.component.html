@@ -1,0 +1,107 @@
+<div class="trip-container">
+  <h2>Travel Planner</h2>
+
+  <div class="error" *ngIf="error">
+    {{error}}
+  </div>
+
+  <div class="create-trip-form">
+    <h3>Create New Trip</h3>
+    <form (ngSubmit)="onSubmit()" #tripForm="ngForm">
+      <div class="form-group">
+        <label for="name">Trip Name:</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          [(ngModel)]="newTrip.name" 
+          required 
+          #name="ngModel">
+        <div *ngIf="name.invalid && name.touched" class="error">
+          Trip name is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="destination">Destination:</label>
+        <input 
+          type="text" 
+          id="destination" 
+          name="destination" 
+          [(ngModel)]="newTrip.destination">
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea 
+          id="description" 
+          name="description" 
+          [(ngModel)]="newTrip.description"
+          rows="3"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate">Start Date:</label>
+          <input 
+            type="date" 
+            id="startDate" 
+            name="startDate" 
+            [(ngModel)]="newTrip.startDate" 
+            required 
+            #startDate="ngModel">
+          <div *ngIf="startDate.invalid && startDate.touched" class="error">
+            Start date is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">End Date:</label>
+          <input 
+            type="date" 
+            id="endDate" 
+            name="endDate" 
+            [(ngModel)]="newTrip.endDate" 
+            required 
+            #endDate="ngModel">
+          <div *ngIf="endDate.invalid && endDate.touched" class="error">
+            End date is required.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="tripForm.invalid">Create Trip</button>
+      <button type="button" (click)="resetForm()">Reset</button>
+    </form>
+  </div>
+
+  <div class="trips-list">
+    <h3>Your Trips</h3>
+    
+    <div *ngIf="loading" class="loading">
+      Loading trips...
+    </div>
+
+    <div *ngIf="!loading && trips.length === 0" class="no-trips">
+      No trips found. Create your first trip above!
+    </div>
+
+    <div *ngIf="!loading && trips.length > 0" class="trip-cards">
+      <div *ngFor="let trip of trips" class="trip-card">
+        <h4>{{trip.name}}</h4>
+        <p class="destination" *ngIf="trip.destination">
+          <strong>Destination:</strong> {{trip.destination}}
+        </p>
+        <p class="description" *ngIf="trip.description">
+          {{trip.description}}
+        </p>
+        <p class="dates">
+          <strong>Dates:</strong> {{trip.startDate}} to {{trip.endDate}}
+        </p>
+        <div class="trip-actions">
+          <button class="delete-btn" (click)="deleteTrip(trip.id!)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
