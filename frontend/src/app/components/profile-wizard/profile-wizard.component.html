@@ -1,0 +1,218 @@
+<div class="wizard-container">
+  <div class="wizard-card">
+    <!-- Header -->
+    <div class="wizard-header">
+      <h2>Create Your Travel Profile</h2>
+      <p class="subtitle">Help us understand your travel preferences so we can recommend the perfect trips for you</p>
+      
+      <!-- Progress Bar -->
+      <div class="progress-bar">
+        <div class="progress-track">
+          <div 
+            class="progress-fill" 
+            [style.width.%]="(currentStep / totalSteps) * 100">
+          </div>
+        </div>
+        <div class="step-indicators">
+          <div 
+            *ngFor="let step of [1,2,3,4]" 
+            class="step-indicator"
+            [class.active]="step <= currentStep"
+            [class.current]="step === currentStep">
+            {{ step }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form [formGroup]="profileForm">
+      <!-- Step 1: Travel Style -->
+      <div class="wizard-step" *ngIf="currentStep === 1">
+        <h3>What's your travel style?</h3>
+        <p class="step-description">Choose the profile that best describes how you like to travel</p>
+        
+        <div class="profiles-grid">
+          <div 
+            *ngFor="let profile of travelerProfiles"
+            class="profile-card"
+            [class.selected]="profileForm.get('selectedProfile')?.value === profile.id"
+            (click)="selectProfile(profile.id)">
+            <h4>{{ profile.name }}</h4>
+            <p>{{ profile.description }}</p>
+            <div class="characteristics">
+              <span *ngFor="let char of profile.characteristics" class="characteristic-tag">
+                {{ char }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Travel Companions -->
+      <div class="wizard-step" *ngIf="currentStep === 2">
+        <h3>Who do you usually travel with?</h3>
+        <p class="step-description">This helps us suggest appropriate accommodations and activities</p>
+        
+        <div class="companions-grid">
+          <div 
+            *ngFor="let companion of travelCompanions"
+            class="companion-card"
+            [class.selected]="profileForm.get('travelCompanion')?.value === companion.value"
+            (click)="selectCompanion(companion.value)">
+            <h4>{{ companion.label }}</h4>
+            <p>{{ companion.description }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Budget and Frequency -->
+      <div class="wizard-step" *ngIf="currentStep === 3">
+        <h3>Budget and Travel Frequency</h3>
+        <p class="step-description">Help us recommend options that fit your budget and schedule</p>
+        
+        <div class="form-section">
+          <h4>What's your typical daily budget?</h4>
+          <div class="budget-grid">
+            <div 
+              *ngFor="let budget of budgetRanges"
+              class="budget-card"
+              [class.selected]="profileForm.get('budgetRange')?.value === budget.value"
+              (click)="selectBudget(budget.value)">
+              <h5>{{ budget.label }}</h5>
+              <p>{{ budget.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h4>How often do you travel?</h4>
+          <div class="frequency-options">
+            <label class="radio-option">
+              <input type="radio" formControlName="travelFrequency" value="rarely">
+              <span class="radio-custom"></span>
+              <span class="radio-label">
+                <strong>Rarely</strong><br>
+                <small>Once a year or less</small>
+              </span>
+            </label>
+            
+            <label class="radio-option">
+              <input type="radio" formControlName="travelFrequency" value="occasionally">
+              <span class="radio-custom"></span>
+              <span class="radio-label">
+                <strong>Occasionally</strong><br>
+                <small>2-3 times per year</small>
+              </span>
+            </label>
+            
+            <label class="radio-option">
+              <input type="radio" formControlName="travelFrequency" value="frequently">
+              <span class="radio-custom"></span>
+              <span class="radio-label">
+                <strong>Frequently</strong><br>
+                <small>4-6 times per year</small>
+              </span>
+            </label>
+            
+            <label class="radio-option">
+              <input type="radio" formControlName="travelFrequency" value="constantly">
+              <span class="radio-custom"></span>
+              <span class="radio-label">
+                <strong>Constantly</strong><br>
+                <small>Monthly or more</small>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Additional Preferences -->
+      <div class="wizard-step" *ngIf="currentStep === 4">
+        <h3>Tell us more about your preferences</h3>
+        <p class="step-description">This information is optional but helps us provide better recommendations</p>
+        
+        <div class="form-section">
+          <label for="preferredDestinations">Favorite destinations or places you'd like to visit</label>
+          <textarea 
+            id="preferredDestinations"
+            formControlName="preferredDestinations"
+            class="form-control"
+            rows="3"
+            placeholder="e.g., Europe, Southeast Asia, National Parks, Beach destinations...">
+          </textarea>
+        </div>
+
+        <div class="form-section">
+          <label for="additionalInfo">Anything else we should know?</label>
+          <textarea 
+            id="additionalInfo"
+            formControlName="additionalInfo"
+            class="form-control"
+            rows="3"
+            placeholder="Special interests, accessibility needs, dietary restrictions...">
+          </textarea>
+        </div>
+
+        <!-- Summary -->
+        <div class="profile-summary">
+          <h4>Your Profile Summary</h4>
+          <div class="summary-item" *ngIf="getSelectedProfile()">
+            <strong>Travel Style:</strong> {{ getSelectedProfile()?.name }}
+          </div>
+          <div class="summary-item" *ngIf="getSelectedCompanion()">
+            <strong>Travel Companions:</strong> {{ getSelectedCompanion()?.label }}
+          </div>
+          <div class="summary-item" *ngIf="getSelectedBudget()">
+            <strong>Budget Range:</strong> {{ getSelectedBudget()?.label }}
+          </div>
+          <div class="summary-item" *ngIf="profileForm.get('travelFrequency')?.value">
+            <strong>Travel Frequency:</strong> 
+            {{ profileForm.get('travelFrequency')?.value | titlecase }}
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <small>{{ errorMessage }}</small>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="wizard-navigation">
+      <button 
+        type="button" 
+        class="btn btn-outline"
+        *ngIf="currentStep > 1"
+        (click)="previousStep()">
+        ← Previous
+      </button>
+
+      <button 
+        type="button" 
+        class="btn btn-text"
+        (click)="skipWizard()">
+        Skip for now
+      </button>
+
+      <button 
+        type="button" 
+        class="btn btn-primary"
+        *ngIf="currentStep < totalSteps"
+        [disabled]="!isStepValid(currentStep)"
+        (click)="nextStep()">
+        Next →
+      </button>
+
+      <button 
+        type="button" 
+        class="btn btn-primary"
+        *ngIf="currentStep === totalSteps"
+        [disabled]="isLoading"
+        (click)="onSubmit()">
+        <span *ngIf="isLoading">Creating Profile...</span>
+        <span *ngIf="!isLoading">Complete Profile</span>
+      </button>
+    </div>
+  </div>
+</div>

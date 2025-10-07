@@ -1,12 +1,15 @@
-<div class="container">
-  <header>
-    <h1>{{title}}</h1>
-    <nav>
-      <a routerLink="/trips">Trips</a>
-    </nav>
-  </header>
+<div class="app-container">
+  <nav class="navbar" *ngIf="currentUser">
+    <div class="nav-brand">
+      <h2>Travel Planner</h2>
+    </div>
+    <div class="nav-menu">
+      <span class="user-greeting">Welcome, {{ currentUser.firstName }}!</span>
+      <button class="btn btn-outline" (click)="logout()">Logout</button>
+    </div>
+  </nav>
   
-  <main>
+  <main class="main-content">
     <router-outlet></router-outlet>
   </main>
 </div>
