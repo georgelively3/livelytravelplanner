@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.travelplanner.controller.HealthControllerTest" time="3.125" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.travelplanner.controller.PersonasControllerTest" time="1.681" tests="12" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -59,16 +59,76 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="health_ReturnsHealthStatus" classname="com.travelplanner.controller.HealthControllerTest" time="3.101">
-    <system-out><![CDATA[11:46:40.297 [main] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
-11:46:41.240 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-11:46:41.241 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-11:46:41.245 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 3 ms
+  <testcase name="getPersona_PersonaNotFound_ReturnsNotFound" classname="com.travelplanner.controller.PersonasControllerTest" time="0.895">
+    <system-out><![CDATA[11:46:42.188 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:42.188 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:42.189 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
 ]]></system-out>
-    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\georg\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.9\byte-buddy-agent-1.14.9.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
+  </testcase>
+  <testcase name="updatePersona_ValidRequest_ReturnsUpdatedPersona" classname="com.travelplanner.controller.PersonasControllerTest" time="0.523">
+    <system-out><![CDATA[11:46:42.418 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:42.418 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:42.418 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="getPersona_UnauthenticatedUser_ReturnsBadRequest" classname="com.travelplanner.controller.PersonasControllerTest" time="0.021">
+    <system-out><![CDATA[11:46:42.940 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:42.940 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:42.940 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="updatePersona_UnauthenticatedUser_ReturnsBadRequest" classname="com.travelplanner.controller.PersonasControllerTest" time="0.025">
+    <system-out><![CDATA[11:46:42.964 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:42.964 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:42.964 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="createPersona_UnauthenticatedUser_ReturnsBadRequest" classname="com.travelplanner.controller.PersonasControllerTest" time="0.024">
+    <system-out><![CDATA[11:46:42.989 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:42.989 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:42.989 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="getUserPersonas_AuthenticatedUser_ReturnsPersonas" classname="com.travelplanner.controller.PersonasControllerTest" time="0.047">
+    <system-out><![CDATA[11:46:43.013 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:43.013 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:43.013 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="updatePersona_PersonaNotFound_ReturnsNotFound" classname="com.travelplanner.controller.PersonasControllerTest" time="0.024">
+    <system-out><![CDATA[11:46:43.060 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:43.060 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:43.060 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="createPersona_ValidRequest_ReturnsCreatedPersona" classname="com.travelplanner.controller.PersonasControllerTest" time="0.034">
+    <system-out><![CDATA[11:46:43.089 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:43.089 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:43.089 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="getUserPersonas_UnauthenticatedUser_ReturnsBadRequest" classname="com.travelplanner.controller.PersonasControllerTest" time="0.013">
+    <system-out><![CDATA[11:46:43.118 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:43.118 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:43.119 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="updatePersona_PartialUpdate_UpdatesOnlyProvidedFields" classname="com.travelplanner.controller.PersonasControllerTest" time="0.022">
+    <system-out><![CDATA[11:46:43.132 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:43.133 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:43.133 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="createPersona_InvalidBaseProfile_ReturnsBadRequest" classname="com.travelplanner.controller.PersonasControllerTest" time="0.019">
+    <system-out><![CDATA[11:46:43.154 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:43.154 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:43.155 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 1 ms
+]]></system-out>
+  </testcase>
+  <testcase name="getPersona_AuthenticatedUserAndValidId_ReturnsPersona" classname="com.travelplanner.controller.PersonasControllerTest" time="0.016">
+    <system-out><![CDATA[11:46:43.174 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+11:46:43.174 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+11:46:43.174 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+]]></system-out>
   </testcase>
 </testsuite>

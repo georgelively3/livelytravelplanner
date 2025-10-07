@@ -17,23 +17,23 @@ public class UserPersonaResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-<span class="nc" id="L20">    public UserPersonaResponse(UserPersona persona) {</span>
-<span class="nc" id="L21">        this.id = persona.getId();</span>
-<span class="nc bnc" id="L22" title="All 2 branches missed.">        this.baseProfileId = persona.getBaseProfile() != null ? persona.getBaseProfile().getId() : null;</span>
-<span class="nc bnc" id="L23" title="All 2 branches missed.">        this.baseProfileName = persona.getBaseProfile() != null ? persona.getBaseProfile().getName() : null;</span>
-<span class="nc bnc" id="L24" title="All 2 branches missed.">        this.baseProfileDescription = persona.getBaseProfile() != null ? persona.getBaseProfile().getDescription() : null;</span>
-<span class="nc" id="L25">        this.personalPreferences = persona.getPersonalPreferences();</span>
-<span class="nc" id="L26">        this.constraints = persona.getConstraints();</span>
-<span class="nc" id="L27">        this.budgetDetails = persona.getBudgetDetails();</span>
-<span class="nc" id="L28">        this.accessibilityNeeds = persona.getAccessibilityNeeds();</span>
-<span class="nc" id="L29">        this.groupDynamics = persona.getGroupDynamics();</span>
-<span class="nc" id="L30">        this.createdAt = persona.getCreatedAt();</span>
-<span class="nc" id="L31">        this.updatedAt = persona.getUpdatedAt();</span>
-<span class="nc" id="L32">    }</span>
+<span class="fc" id="L20">    public UserPersonaResponse(UserPersona persona) {</span>
+<span class="fc" id="L21">        this.id = persona.getId();</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        this.baseProfileId = persona.getBaseProfile() != null ? persona.getBaseProfile().getId() : null;</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        this.baseProfileName = persona.getBaseProfile() != null ? persona.getBaseProfile().getName() : null;</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        this.baseProfileDescription = persona.getBaseProfile() != null ? persona.getBaseProfile().getDescription() : null;</span>
+<span class="fc" id="L25">        this.personalPreferences = persona.getPersonalPreferences();</span>
+<span class="fc" id="L26">        this.constraints = persona.getConstraints();</span>
+<span class="fc" id="L27">        this.budgetDetails = persona.getBudgetDetails();</span>
+<span class="fc" id="L28">        this.accessibilityNeeds = persona.getAccessibilityNeeds();</span>
+<span class="fc" id="L29">        this.groupDynamics = persona.getGroupDynamics();</span>
+<span class="fc" id="L30">        this.createdAt = persona.getCreatedAt();</span>
+<span class="fc" id="L31">        this.updatedAt = persona.getUpdatedAt();</span>
+<span class="fc" id="L32">    }</span>
 
     // Getters and setters
     public Long getId() {
-<span class="nc" id="L36">        return id;</span>
+<span class="fc" id="L36">        return id;</span>
     }
 
     public void setId(Long id) {
@@ -41,7 +41,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L41">    }</span>
 
     public Long getBaseProfileId() {
-<span class="nc" id="L44">        return baseProfileId;</span>
+<span class="fc" id="L44">        return baseProfileId;</span>
     }
 
     public void setBaseProfileId(Long baseProfileId) {
@@ -49,7 +49,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L49">    }</span>
 
     public String getBaseProfileName() {
-<span class="nc" id="L52">        return baseProfileName;</span>
+<span class="fc" id="L52">        return baseProfileName;</span>
     }
 
     public void setBaseProfileName(String baseProfileName) {
@@ -57,7 +57,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L57">    }</span>
 
     public String getBaseProfileDescription() {
-<span class="nc" id="L60">        return baseProfileDescription;</span>
+<span class="fc" id="L60">        return baseProfileDescription;</span>
     }
 
     public void setBaseProfileDescription(String baseProfileDescription) {
@@ -65,7 +65,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L65">    }</span>
 
     public String getPersonalPreferences() {
-<span class="nc" id="L68">        return personalPreferences;</span>
+<span class="fc" id="L68">        return personalPreferences;</span>
     }
 
     public void setPersonalPreferences(String personalPreferences) {
@@ -73,7 +73,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L73">    }</span>
 
     public String getConstraints() {
-<span class="nc" id="L76">        return constraints;</span>
+<span class="fc" id="L76">        return constraints;</span>
     }
 
     public void setConstraints(String constraints) {
@@ -81,7 +81,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L81">    }</span>
 
     public String getBudgetDetails() {
-<span class="nc" id="L84">        return budgetDetails;</span>
+<span class="fc" id="L84">        return budgetDetails;</span>
     }
 
     public void setBudgetDetails(String budgetDetails) {
@@ -89,7 +89,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L89">    }</span>
 
     public String getAccessibilityNeeds() {
-<span class="nc" id="L92">        return accessibilityNeeds;</span>
+<span class="fc" id="L92">        return accessibilityNeeds;</span>
     }
 
     public void setAccessibilityNeeds(String accessibilityNeeds) {
@@ -97,7 +97,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L97">    }</span>
 
     public String getGroupDynamics() {
-<span class="nc" id="L100">        return groupDynamics;</span>
+<span class="fc" id="L100">        return groupDynamics;</span>
     }
 
     public void setGroupDynamics(String groupDynamics) {
@@ -105,7 +105,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L105">    }</span>
 
     public LocalDateTime getCreatedAt() {
-<span class="nc" id="L108">        return createdAt;</span>
+<span class="fc" id="L108">        return createdAt;</span>
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
@@ -113,7 +113,7 @@ public class UserPersonaResponse {
 <span class="nc" id="L113">    }</span>
 
     public LocalDateTime getUpdatedAt() {
-<span class="nc" id="L116">        return updatedAt;</span>
+<span class="fc" id="L116">        return updatedAt;</span>
     }
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
