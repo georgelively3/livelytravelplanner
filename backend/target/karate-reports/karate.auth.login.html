@@ -49,7 +49,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
     <div>Scenarios</div>
   </div>
   <div id="nav-date">
-    <div>2025-10-07 12:33:01 PM</div>
+    <div>2025-10-07 12:50:13 PM</div>
   </div>
 </div>
 
@@ -81,7 +81,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>29</span>
+              <span>ms:</span>&nbsp;<span>96</span>
             </div>
           </div>
           
@@ -107,8 +107,8 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.4">12:33:01.313 karate.env system property was: null 
-12:33:01.315 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:13.522 karate.env system property was: null 
+12:50:13.522 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -166,13 +166,13 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   <div class="step-row">
     <div class="step-container" id="0.6">
-      <div class="step-ref failed">6</div>
+      <div class="step-ref passed">6</div>
       
-      <div class="step-cell failed">
-        <span>And</span>&nbsp;<span>request __arg</span>
+      <div class="step-cell passed">
+        <span>And</span>&nbsp;<span>request { email: &#39;#(email)&#39;, password: &#39;#(password)&#39; }</span>
       </div>
     </div>
-    <div class="time-cell failed">28</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -181,17 +181,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.6">12:33:01.345 classpath:karate/auth/login.feature:6
-And request __arg
-js failed:
-&gt;&gt;&gt;&gt;
-01: __arg
-&lt;&lt;&lt;&lt;
-org.graalvm.polyglot.PolyglotException: ReferenceError: &quot;__arg&quot; is not defined
-- &lt;js&gt;.:program(Unnamed:1)
-
-classpath:karate/auth/login.feature:6
-</div>   
+     
 
   
 
@@ -204,13 +194,13 @@ classpath:karate/auth/login.feature:6
 
   <div class="step-row">
     <div class="step-container" id="0.7">
-      <div class="step-ref skipped">7</div>
+      <div class="step-ref passed">7</div>
       
-      <div class="step-cell skipped">
+      <div class="step-cell passed">
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell skipped">0</div>
+    <div class="time-cell passed">94</div>
   </div>
 
    
@@ -232,13 +222,13 @@ classpath:karate/auth/login.feature:6
 
   <div class="step-row">
     <div class="step-container" id="0.8">
-      <div class="step-ref skipped">8</div>
+      <div class="step-ref failed">8</div>
       
-      <div class="step-cell skipped">
+      <div class="step-cell failed">
         <span>Then</span>&nbsp;<span>status 200</span>
       </div>
     </div>
-    <div class="time-cell skipped">0</div>
+    <div class="time-cell failed">0</div>
   </div>
 
    
@@ -247,7 +237,12 @@ classpath:karate/auth/login.feature:6
 
   
 
-     
+  <div class="preformatted" data-parent="0.8">12:50:13.619 classpath:karate/auth/login.feature:8
+Then status 200
+status code was: 401, expected: 200, response time in milliseconds: 92, url: http://localhost:8080/api/auth/signin, response: 
+{&quot;message&quot;:&quot;Error: Invalid credentials!&quot;}
+classpath:karate/auth/login.feature:8
+</div>   
 
   
 

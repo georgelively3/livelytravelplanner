@@ -49,7 +49,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
     <div>Scenarios</div>
   </div>
   <div id="nav-date">
-    <div>2025-10-07 12:15:24 PM</div>
+    <div>2025-10-07 12:50:14 PM</div>
   </div>
 </div>
 
@@ -102,7 +102,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>7</span>
+              <span>ms:</span>&nbsp;<span>10</span>
             </div>
           </div>
           <div class="step-row">
@@ -134,8 +134,8 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.4">12:15:24.707 karate.env system property was: null 
-12:15:24.708 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:14.034 karate.env system property was: null 
+12:50:14.035 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -171,7 +171,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
         <span>*</span>&nbsp;<span>def randomUser = function() { return { email: &#39;user&#39; + Math.floor(Math.random() * 10000) + &#39;@test.com&#39;, password: &#39;Password123!&#39;, firstName: &#39;Test&#39;, lastName: &#39;User&#39; } }</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">0</div>
   </div>
 
    
@@ -249,13 +249,13 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   <div class="step-row">
     <div class="step-container" id="0.10">
-      <div class="step-ref failed">10</div>
+      <div class="step-ref passed">10</div>
       
-      <div class="step-cell failed">
+      <div class="step-cell passed">
         <span>When</span>&nbsp;<span>method get</span>
       </div>
     </div>
-    <div class="time-cell failed">3</div>
+    <div class="time-cell passed">7</div>
   </div>
 
    
@@ -264,13 +264,7 @@ posthog.init('phc_M6fKk3dSX9HjglkqPSybauGas45NINb7EgsPGU8N9g1',{
 
   
 
-  <div class="preformatted" data-parent="0.10">12:15:24.714 org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt, http call failed after 2 milliseconds for url: http://localhost:8080/api/personas
-12:15:24.715 classpath:karate/personas/personas.feature:10
-When method get
-http call failed after 2 milliseconds for url: http://localhost:8080/api/personas
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/personas/personas.feature:10
-</div>   
+     
 
   
 
@@ -283,13 +277,13 @@ classpath:karate/personas/personas.feature:10
 
   <div class="step-row">
     <div class="step-container" id="0.11">
-      <div class="step-ref skipped">11</div>
+      <div class="step-ref failed">11</div>
       
-      <div class="step-cell skipped">
+      <div class="step-cell failed">
         <span>Then</span>&nbsp;<span>status 401</span>
       </div>
     </div>
-    <div class="time-cell skipped">0</div>
+    <div class="time-cell failed">0</div>
   </div>
 
    
@@ -298,7 +292,12 @@ classpath:karate/personas/personas.feature:10
 
   
 
-     
+  <div class="preformatted" data-parent="0.11">12:50:14.045 classpath:karate/personas/personas.feature:11
+Then status 401
+status code was: 403, expected: 401, response time in milliseconds: 5, url: http://localhost:8080/api/personas, response: 
+{&quot;timestamp&quot;:&quot;2025-10-07T16:50:14.043+00:00&quot;,&quot;status&quot;:403,&quot;error&quot;:&quot;Forbidden&quot;,&quot;message&quot;:&quot;Access Denied&quot;,&quot;path&quot;:&quot;/api/personas&quot;}
+classpath:karate/personas/personas.feature:11
+</div>   
 
   
 
@@ -318,7 +317,7 @@ classpath:karate/personas/personas.feature:10
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>23</span>
+              <span>ms:</span>&nbsp;<span>9</span>
             </div>
           </div>
           <div class="step-row">
@@ -350,8 +349,8 @@ classpath:karate/personas/personas.feature:10
 
   
 
-  <div class="preformatted" data-parent="0.4">12:15:24.719 karate.env system property was: null 
-12:15:24.721 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:14.053 karate.env system property was: null 
+12:50:14.055 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -387,7 +386,7 @@ classpath:karate/personas/personas.feature:10
         <span>*</span>&nbsp;<span>def randomUser = function() { return { email: &#39;user&#39; + Math.floor(Math.random() * 10000) + &#39;@test.com&#39;, password: &#39;Password123!&#39;, firstName: &#39;Test&#39;, lastName: &#39;User&#39; } }</span>
       </div>
     </div>
-    <div class="time-cell passed">0</div>
+    <div class="time-cell passed">1</div>
   </div>
 
    
@@ -415,7 +414,7 @@ classpath:karate/personas/personas.feature:10
         <span>*</span>&nbsp;<span>def authToken = call read(&#39;classpath:karate/auth/auth-helper.js&#39;)</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">2</div>
   </div>
 
    
@@ -443,7 +442,7 @@ classpath:karate/personas/personas.feature:10
         <span>*</span>&nbsp;<span>def token = authToken.getAuthToken()</span>
       </div>
     </div>
-    <div class="time-cell failed">22</div>
+    <div class="time-cell failed">6</div>
   </div>
 
    
@@ -452,184 +451,25 @@ classpath:karate/personas/personas.feature:10
 
   
 
-  <div class="preformatted" data-parent="0.14">12:15:24.745 classpath:karate/personas/personas.feature:14
+  <div class="preformatted" data-parent="0.14">12:50:14.066 classpath:karate/personas/personas.feature:14
 * def token = authToken.getAuthToken()
 js failed:
 &gt;&gt;&gt;&gt;
 01: authToken.getAuthToken()
 &lt;&lt;&lt;&lt;
-org.graalvm.polyglot.PolyglotException: http call failed after 15 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-- com.intuit.karate.core.FeatureResult.getErrorMessagesCombined(FeatureResult.java:215)
-- com.intuit.karate.core.ScenarioEngine.callFeature(ScenarioEngine.java:2046)
-- com.intuit.karate.core.ScenarioEngine.call(ScenarioEngine.java:1948)
-- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:165)
+org.graalvm.polyglot.PolyglotException: java.io.FileNotFoundException: C:\Users\georg\LitheSpeed Dropbox\George Lively\lithespeed code\livelytravelplanner2\backend\target\test-classes\karate\personas\signup.feature (The system cannot find the file specified)
+- com.intuit.karate.resource.FileResource.getStream(FileResource.java:98)
+- com.intuit.karate.core.FeatureParser.parse(FeatureParser.java:70)
+- com.intuit.karate.core.Feature.read(Feature.java:63)
+- com.intuit.karate.core.ScenarioFileReader.readFile(ScenarioFileReader.java:65)
+- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:164)
 - com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:155)
 - &lt;js&gt;.getAuthToken(Unnamed:13)
 
 classpath:karate/personas/personas.feature:14
 </div>   
 
-  <div>
-        
-    <div class="step-row">
-      <div class="step-container" id="0.14.0.call">
-        <div class="step-ref passed">&gt;&gt;</div>
-        <div class="step-indent"></div>
-        <div class="step-cell passed">karate.auth.signup</div>
-      </div>
-      <div class="time-cell passed">15</div>
-    </div>
-    <div>
-      <div><div>
   
-
-  
-
-  <div class="step-row" data-parent="0.14.0.call">
-    <div class="step-container" id="0.14.0.call.0.4">
-      <div class="step-ref passed">4</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>Given</span>&nbsp;<span>url baseUrl</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.14.0.call">
-    <div class="step-container" id="0.14.0.call.0.5">
-      <div class="step-ref passed">5</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>path &#39;auth/signup&#39;</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.14.0.call">
-    <div class="step-container" id="0.14.0.call.0.6">
-      <div class="step-ref passed">6</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>request __arg</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.14.0.call">
-    <div class="step-container" id="0.14.0.call.0.7">
-      <div class="step-ref failed">7</div>
-      <div class="step-indent"></div>
-      <div class="step-cell failed">
-        <span>When</span>&nbsp;<span>method post</span>
-      </div>
-    </div>
-    <div class="time-cell failed">15</div>
-  </div>
-
-   
-  
-  
-
-  
-
-  <div class="preformatted" data-parent="0.14.0.call.0.7">12:15:24.742 org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt, http call failed after 15 milliseconds for url: http://localhost:8080/api/auth/signup
-12:15:24.742 classpath:karate/auth/signup.feature:7
-When method post
-http call failed after 15 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-</div>   
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.14.0.call">
-    <div class="step-container" id="0.14.0.call.0.8">
-      <div class="step-ref skipped">8</div>
-      <div class="step-indent"></div>
-      <div class="step-cell skipped">
-        <span>Then</span>&nbsp;<span>status 200</span>
-      </div>
-    </div>
-    <div class="time-cell skipped">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-    </div>    
-  </div>
 
 </div>
 </div>
@@ -815,7 +655,7 @@ classpath:karate/auth/signup.feature:7
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>12</span>
+              <span>ms:</span>&nbsp;<span>3</span>
             </div>
           </div>
           <div class="step-row">
@@ -847,8 +687,8 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.4">12:15:24.751 karate.env system property was: null 
-12:15:24.752 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:14.075 karate.env system property was: null 
+12:50:14.075 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -940,7 +780,7 @@ classpath:karate/auth/signup.feature:7
         <span>*</span>&nbsp;<span>def token = authToken.getAuthToken()</span>
       </div>
     </div>
-    <div class="time-cell failed">10</div>
+    <div class="time-cell failed">2</div>
   </div>
 
    
@@ -949,184 +789,25 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.23">12:15:24.764 classpath:karate/personas/personas.feature:23
+  <div class="preformatted" data-parent="0.23">12:50:14.079 classpath:karate/personas/personas.feature:23
 * def token = authToken.getAuthToken()
 js failed:
 &gt;&gt;&gt;&gt;
 01: authToken.getAuthToken()
 &lt;&lt;&lt;&lt;
-org.graalvm.polyglot.PolyglotException: http call failed after 4 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-- com.intuit.karate.core.FeatureResult.getErrorMessagesCombined(FeatureResult.java:215)
-- com.intuit.karate.core.ScenarioEngine.callFeature(ScenarioEngine.java:2046)
-- com.intuit.karate.core.ScenarioEngine.call(ScenarioEngine.java:1948)
-- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:165)
+org.graalvm.polyglot.PolyglotException: java.io.FileNotFoundException: C:\Users\georg\LitheSpeed Dropbox\George Lively\lithespeed code\livelytravelplanner2\backend\target\test-classes\karate\personas\signup.feature (The system cannot find the file specified)
+- com.intuit.karate.resource.FileResource.getStream(FileResource.java:98)
+- com.intuit.karate.core.FeatureParser.parse(FeatureParser.java:70)
+- com.intuit.karate.core.Feature.read(Feature.java:63)
+- com.intuit.karate.core.ScenarioFileReader.readFile(ScenarioFileReader.java:65)
+- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:164)
 - com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:155)
 - &lt;js&gt;.getAuthToken(Unnamed:13)
 
 classpath:karate/personas/personas.feature:23
 </div>   
 
-  <div>
-        
-    <div class="step-row">
-      <div class="step-container" id="0.23.0.call">
-        <div class="step-ref passed">&gt;&gt;</div>
-        <div class="step-indent"></div>
-        <div class="step-cell passed">karate.auth.signup</div>
-      </div>
-      <div class="time-cell passed">5</div>
-    </div>
-    <div>
-      <div><div>
   
-
-  
-
-  <div class="step-row" data-parent="0.23.0.call">
-    <div class="step-container" id="0.23.0.call.0.4">
-      <div class="step-ref passed">4</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>Given</span>&nbsp;<span>url baseUrl</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.23.0.call">
-    <div class="step-container" id="0.23.0.call.0.5">
-      <div class="step-ref passed">5</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>path &#39;auth/signup&#39;</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.23.0.call">
-    <div class="step-container" id="0.23.0.call.0.6">
-      <div class="step-ref passed">6</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>request __arg</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.23.0.call">
-    <div class="step-container" id="0.23.0.call.0.7">
-      <div class="step-ref failed">7</div>
-      <div class="step-indent"></div>
-      <div class="step-cell failed">
-        <span>When</span>&nbsp;<span>method post</span>
-      </div>
-    </div>
-    <div class="time-cell failed">4</div>
-  </div>
-
-   
-  
-  
-
-  
-
-  <div class="preformatted" data-parent="0.23.0.call.0.7">12:15:24.763 org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt, http call failed after 4 milliseconds for url: http://localhost:8080/api/auth/signup
-12:15:24.763 classpath:karate/auth/signup.feature:7
-When method post
-http call failed after 4 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-</div>   
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.23.0.call">
-    <div class="step-container" id="0.23.0.call.0.8">
-      <div class="step-ref skipped">8</div>
-      <div class="step-indent"></div>
-      <div class="step-cell skipped">
-        <span>Then</span>&nbsp;<span>status 200</span>
-      </div>
-    </div>
-    <div class="time-cell skipped">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-    </div>    
-  </div>
 
 </div>
 </div>
@@ -1405,7 +1086,7 @@ classpath:karate/auth/signup.feature:7
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>17</span>
+              <span>ms:</span>&nbsp;<span>7</span>
             </div>
           </div>
           <div class="step-row">
@@ -1437,8 +1118,8 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.4">12:15:24.772 karate.env system property was: null 
-12:15:24.772 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:14.086 karate.env system property was: null 
+12:50:14.086 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -1608,13 +1289,13 @@ classpath:karate/auth/signup.feature:7
 
   <div class="step-row">
     <div class="step-container" id="0.51">
-      <div class="step-ref failed">51</div>
+      <div class="step-ref passed">51</div>
       
-      <div class="step-cell failed">
+      <div class="step-cell passed">
         <span>When</span>&nbsp;<span>method post</span>
       </div>
     </div>
-    <div class="time-cell failed">15</div>
+    <div class="time-cell passed">6</div>
   </div>
 
    
@@ -1623,13 +1304,7 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.51">12:15:24.789 org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt, http call failed after 14 milliseconds for url: http://localhost:8080/api/personas
-12:15:24.790 classpath:karate/personas/personas.feature:51
-When method post
-http call failed after 14 milliseconds for url: http://localhost:8080/api/personas
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/personas/personas.feature:51
-</div>   
+     
 
   
 
@@ -1642,13 +1317,13 @@ classpath:karate/personas/personas.feature:51
 
   <div class="step-row">
     <div class="step-container" id="0.52">
-      <div class="step-ref skipped">52</div>
+      <div class="step-ref failed">52</div>
       
-      <div class="step-cell skipped">
+      <div class="step-cell failed">
         <span>Then</span>&nbsp;<span>status 401</span>
       </div>
     </div>
-    <div class="time-cell skipped">0</div>
+    <div class="time-cell failed">0</div>
   </div>
 
    
@@ -1657,7 +1332,12 @@ classpath:karate/personas/personas.feature:51
 
   
 
-     
+  <div class="preformatted" data-parent="0.52">12:50:14.094 classpath:karate/personas/personas.feature:52
+Then status 401
+status code was: 403, expected: 401, response time in milliseconds: 4, url: http://localhost:8080/api/personas, response: 
+{&quot;timestamp&quot;:&quot;2025-10-07T16:50:14.093+00:00&quot;,&quot;status&quot;:403,&quot;error&quot;:&quot;Forbidden&quot;,&quot;message&quot;:&quot;Access Denied&quot;,&quot;path&quot;:&quot;/api/personas&quot;}
+classpath:karate/personas/personas.feature:52
+</div>   
 
   
 
@@ -1677,7 +1357,7 @@ classpath:karate/personas/personas.feature:51
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>47</span>
+              <span>ms:</span>&nbsp;<span>2</span>
             </div>
           </div>
           <div class="step-row">
@@ -1709,8 +1389,8 @@ classpath:karate/personas/personas.feature:51
 
   
 
-  <div class="preformatted" data-parent="0.4">12:15:24.796 karate.env system property was: null 
-12:15:24.797 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:14.098 karate.env system property was: null 
+12:50:14.099 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -1774,7 +1454,7 @@ classpath:karate/personas/personas.feature:51
         <span>*</span>&nbsp;<span>def authToken = call read(&#39;classpath:karate/auth/auth-helper.js&#39;)</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">0</div>
   </div>
 
    
@@ -1802,7 +1482,7 @@ classpath:karate/personas/personas.feature:51
         <span>*</span>&nbsp;<span>def token = authToken.getAuthToken()</span>
       </div>
     </div>
-    <div class="time-cell failed">46</div>
+    <div class="time-cell failed">1</div>
   </div>
 
    
@@ -1811,184 +1491,25 @@ classpath:karate/personas/personas.feature:51
 
   
 
-  <div class="preformatted" data-parent="0.55">12:15:24.845 classpath:karate/personas/personas.feature:55
+  <div class="preformatted" data-parent="0.55">12:50:14.101 classpath:karate/personas/personas.feature:55
 * def token = authToken.getAuthToken()
 js failed:
 &gt;&gt;&gt;&gt;
 01: authToken.getAuthToken()
 &lt;&lt;&lt;&lt;
-org.graalvm.polyglot.PolyglotException: http call failed after 34 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-- com.intuit.karate.core.FeatureResult.getErrorMessagesCombined(FeatureResult.java:215)
-- com.intuit.karate.core.ScenarioEngine.callFeature(ScenarioEngine.java:2046)
-- com.intuit.karate.core.ScenarioEngine.call(ScenarioEngine.java:1948)
-- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:165)
+org.graalvm.polyglot.PolyglotException: java.io.FileNotFoundException: C:\Users\georg\LitheSpeed Dropbox\George Lively\lithespeed code\livelytravelplanner2\backend\target\test-classes\karate\personas\signup.feature (The system cannot find the file specified)
+- com.intuit.karate.resource.FileResource.getStream(FileResource.java:98)
+- com.intuit.karate.core.FeatureParser.parse(FeatureParser.java:70)
+- com.intuit.karate.core.Feature.read(Feature.java:63)
+- com.intuit.karate.core.ScenarioFileReader.readFile(ScenarioFileReader.java:65)
+- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:164)
 - com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:155)
 - &lt;js&gt;.getAuthToken(Unnamed:13)
 
 classpath:karate/personas/personas.feature:55
 </div>   
 
-  <div>
-        
-    <div class="step-row">
-      <div class="step-container" id="0.55.0.call">
-        <div class="step-ref passed">&gt;&gt;</div>
-        <div class="step-indent"></div>
-        <div class="step-cell passed">karate.auth.signup</div>
-      </div>
-      <div class="time-cell passed">35</div>
-    </div>
-    <div>
-      <div><div>
   
-
-  
-
-  <div class="step-row" data-parent="0.55.0.call">
-    <div class="step-container" id="0.55.0.call.0.4">
-      <div class="step-ref passed">4</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>Given</span>&nbsp;<span>url baseUrl</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.55.0.call">
-    <div class="step-container" id="0.55.0.call.0.5">
-      <div class="step-ref passed">5</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>path &#39;auth/signup&#39;</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.55.0.call">
-    <div class="step-container" id="0.55.0.call.0.6">
-      <div class="step-ref passed">6</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>request __arg</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.55.0.call">
-    <div class="step-container" id="0.55.0.call.0.7">
-      <div class="step-ref failed">7</div>
-      <div class="step-indent"></div>
-      <div class="step-cell failed">
-        <span>When</span>&nbsp;<span>method post</span>
-      </div>
-    </div>
-    <div class="time-cell failed">34</div>
-  </div>
-
-   
-  
-  
-
-  
-
-  <div class="preformatted" data-parent="0.55.0.call.0.7">12:15:24.838 org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt, http call failed after 34 milliseconds for url: http://localhost:8080/api/auth/signup
-12:15:24.839 classpath:karate/auth/signup.feature:7
-When method post
-http call failed after 34 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-</div>   
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.55.0.call">
-    <div class="step-container" id="0.55.0.call.0.8">
-      <div class="step-ref skipped">8</div>
-      <div class="step-indent"></div>
-      <div class="step-cell skipped">
-        <span>Then</span>&nbsp;<span>status 200</span>
-      </div>
-    </div>
-    <div class="time-cell skipped">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-    </div>    
-  </div>
 
 </div>
 </div>
@@ -2174,7 +1695,7 @@ classpath:karate/auth/signup.feature:7
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>44</span>
+              <span>ms:</span>&nbsp;<span>2</span>
             </div>
           </div>
           <div class="step-row">
@@ -2206,8 +1727,8 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.4">12:15:24.871 karate.env system property was: null 
-12:15:24.873 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:14.105 karate.env system property was: null 
+12:50:14.105 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -2243,7 +1764,7 @@ classpath:karate/auth/signup.feature:7
         <span>*</span>&nbsp;<span>def randomUser = function() { return { email: &#39;user&#39; + Math.floor(Math.random() * 10000) + &#39;@test.com&#39;, password: &#39;Password123!&#39;, firstName: &#39;Test&#39;, lastName: &#39;User&#39; } }</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">0</div>
   </div>
 
    
@@ -2271,7 +1792,7 @@ classpath:karate/auth/signup.feature:7
         <span>*</span>&nbsp;<span>def authToken = call read(&#39;classpath:karate/auth/auth-helper.js&#39;)</span>
       </div>
     </div>
-    <div class="time-cell passed">3</div>
+    <div class="time-cell passed">1</div>
   </div>
 
    
@@ -2299,7 +1820,7 @@ classpath:karate/auth/signup.feature:7
         <span>*</span>&nbsp;<span>def token = authToken.getAuthToken()</span>
       </div>
     </div>
-    <div class="time-cell failed">41</div>
+    <div class="time-cell failed">1</div>
   </div>
 
    
@@ -2308,184 +1829,25 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.65">12:15:24.919 classpath:karate/personas/personas.feature:65
+  <div class="preformatted" data-parent="0.65">12:50:14.108 classpath:karate/personas/personas.feature:65
 * def token = authToken.getAuthToken()
 js failed:
 &gt;&gt;&gt;&gt;
 01: authToken.getAuthToken()
 &lt;&lt;&lt;&lt;
-org.graalvm.polyglot.PolyglotException: http call failed after 20 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-- com.intuit.karate.core.FeatureResult.getErrorMessagesCombined(FeatureResult.java:215)
-- com.intuit.karate.core.ScenarioEngine.callFeature(ScenarioEngine.java:2046)
-- com.intuit.karate.core.ScenarioEngine.call(ScenarioEngine.java:1948)
-- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:165)
+org.graalvm.polyglot.PolyglotException: java.io.FileNotFoundException: C:\Users\georg\LitheSpeed Dropbox\George Lively\lithespeed code\livelytravelplanner2\backend\target\test-classes\karate\personas\signup.feature (The system cannot find the file specified)
+- com.intuit.karate.resource.FileResource.getStream(FileResource.java:98)
+- com.intuit.karate.core.FeatureParser.parse(FeatureParser.java:70)
+- com.intuit.karate.core.Feature.read(Feature.java:63)
+- com.intuit.karate.core.ScenarioFileReader.readFile(ScenarioFileReader.java:65)
+- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:164)
 - com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:155)
 - &lt;js&gt;.getAuthToken(Unnamed:13)
 
 classpath:karate/personas/personas.feature:65
 </div>   
 
-  <div>
-        
-    <div class="step-row">
-      <div class="step-container" id="0.65.0.call">
-        <div class="step-ref passed">&gt;&gt;</div>
-        <div class="step-indent"></div>
-        <div class="step-cell passed">karate.auth.signup</div>
-      </div>
-      <div class="time-cell passed">22</div>
-    </div>
-    <div>
-      <div><div>
   
-
-  
-
-  <div class="step-row" data-parent="0.65.0.call">
-    <div class="step-container" id="0.65.0.call.0.4">
-      <div class="step-ref passed">4</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>Given</span>&nbsp;<span>url baseUrl</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.65.0.call">
-    <div class="step-container" id="0.65.0.call.0.5">
-      <div class="step-ref passed">5</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>path &#39;auth/signup&#39;</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.65.0.call">
-    <div class="step-container" id="0.65.0.call.0.6">
-      <div class="step-ref passed">6</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>request __arg</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.65.0.call">
-    <div class="step-container" id="0.65.0.call.0.7">
-      <div class="step-ref failed">7</div>
-      <div class="step-indent"></div>
-      <div class="step-cell failed">
-        <span>When</span>&nbsp;<span>method post</span>
-      </div>
-    </div>
-    <div class="time-cell failed">22</div>
-  </div>
-
-   
-  
-  
-
-  
-
-  <div class="preformatted" data-parent="0.65.0.call.0.7">12:15:24.915 org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt, http call failed after 20 milliseconds for url: http://localhost:8080/api/auth/signup
-12:15:24.915 classpath:karate/auth/signup.feature:7
-When method post
-http call failed after 20 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-</div>   
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.65.0.call">
-    <div class="step-container" id="0.65.0.call.0.8">
-      <div class="step-ref skipped">8</div>
-      <div class="step-indent"></div>
-      <div class="step-cell skipped">
-        <span>Then</span>&nbsp;<span>status 200</span>
-      </div>
-    </div>
-    <div class="time-cell skipped">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-    </div>    
-  </div>
 
 </div>
 </div>
@@ -2890,7 +2252,7 @@ classpath:karate/auth/signup.feature:7
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>38</span>
+              <span>ms:</span>&nbsp;<span>2</span>
             </div>
           </div>
           <div class="step-row">
@@ -2922,8 +2284,8 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.4">12:15:24.935 karate.env system property was: null 
-12:15:24.937 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:14.112 karate.env system property was: null 
+12:50:14.112 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -2959,7 +2321,7 @@ classpath:karate/auth/signup.feature:7
         <span>*</span>&nbsp;<span>def randomUser = function() { return { email: &#39;user&#39; + Math.floor(Math.random() * 10000) + &#39;@test.com&#39;, password: &#39;Password123!&#39;, firstName: &#39;Test&#39;, lastName: &#39;User&#39; } }</span>
       </div>
     </div>
-    <div class="time-cell passed">1</div>
+    <div class="time-cell passed">0</div>
   </div>
 
    
@@ -3015,7 +2377,7 @@ classpath:karate/auth/signup.feature:7
         <span>*</span>&nbsp;<span>def token = authToken.getAuthToken()</span>
       </div>
     </div>
-    <div class="time-cell failed">36</div>
+    <div class="time-cell failed">1</div>
   </div>
 
    
@@ -3024,184 +2386,25 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.97">12:15:24.976 classpath:karate/personas/personas.feature:97
+  <div class="preformatted" data-parent="0.97">12:50:14.114 classpath:karate/personas/personas.feature:97
 * def token = authToken.getAuthToken()
 js failed:
 &gt;&gt;&gt;&gt;
 01: authToken.getAuthToken()
 &lt;&lt;&lt;&lt;
-org.graalvm.polyglot.PolyglotException: http call failed after 27 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-- com.intuit.karate.core.FeatureResult.getErrorMessagesCombined(FeatureResult.java:215)
-- com.intuit.karate.core.ScenarioEngine.callFeature(ScenarioEngine.java:2046)
-- com.intuit.karate.core.ScenarioEngine.call(ScenarioEngine.java:1948)
-- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:165)
+org.graalvm.polyglot.PolyglotException: java.io.FileNotFoundException: C:\Users\georg\LitheSpeed Dropbox\George Lively\lithespeed code\livelytravelplanner2\backend\target\test-classes\karate\personas\signup.feature (The system cannot find the file specified)
+- com.intuit.karate.resource.FileResource.getStream(FileResource.java:98)
+- com.intuit.karate.core.FeatureParser.parse(FeatureParser.java:70)
+- com.intuit.karate.core.Feature.read(Feature.java:63)
+- com.intuit.karate.core.ScenarioFileReader.readFile(ScenarioFileReader.java:65)
+- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:164)
 - com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:155)
 - &lt;js&gt;.getAuthToken(Unnamed:13)
 
 classpath:karate/personas/personas.feature:97
 </div>   
 
-  <div>
-        
-    <div class="step-row">
-      <div class="step-container" id="0.97.0.call">
-        <div class="step-ref passed">&gt;&gt;</div>
-        <div class="step-indent"></div>
-        <div class="step-cell passed">karate.auth.signup</div>
-      </div>
-      <div class="time-cell passed">28</div>
-    </div>
-    <div>
-      <div><div>
   
-
-  
-
-  <div class="step-row" data-parent="0.97.0.call">
-    <div class="step-container" id="0.97.0.call.0.4">
-      <div class="step-ref passed">4</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>Given</span>&nbsp;<span>url baseUrl</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.97.0.call">
-    <div class="step-container" id="0.97.0.call.0.5">
-      <div class="step-ref passed">5</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>path &#39;auth/signup&#39;</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.97.0.call">
-    <div class="step-container" id="0.97.0.call.0.6">
-      <div class="step-ref passed">6</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>request __arg</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.97.0.call">
-    <div class="step-container" id="0.97.0.call.0.7">
-      <div class="step-ref failed">7</div>
-      <div class="step-indent"></div>
-      <div class="step-cell failed">
-        <span>When</span>&nbsp;<span>method post</span>
-      </div>
-    </div>
-    <div class="time-cell failed">28</div>
-  </div>
-
-   
-  
-  
-
-  
-
-  <div class="preformatted" data-parent="0.97.0.call.0.7">12:15:24.975 org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt, http call failed after 27 milliseconds for url: http://localhost:8080/api/auth/signup
-12:15:24.975 classpath:karate/auth/signup.feature:7
-When method post
-http call failed after 27 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-</div>   
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.97.0.call">
-    <div class="step-container" id="0.97.0.call.0.8">
-      <div class="step-ref skipped">8</div>
-      <div class="step-indent"></div>
-      <div class="step-cell skipped">
-        <span>Then</span>&nbsp;<span>status 200</span>
-      </div>
-    </div>
-    <div class="time-cell skipped">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-    </div>    
-  </div>
 
 </div>
 </div>
@@ -3671,7 +2874,7 @@ classpath:karate/auth/signup.feature:7
               </div>
             </div>
             <div class="scenario-time failed">
-              <span>ms:</span>&nbsp;<span>12</span>
+              <span>ms:</span>&nbsp;<span>2</span>
             </div>
           </div>
           <div class="step-row">
@@ -3703,8 +2906,8 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.4">12:15:24.981 karate.env system property was: null 
-12:15:24.982 Final config: {
+  <div class="preformatted" data-parent="0.4">12:50:14.118 karate.env system property was: null 
+12:50:14.118 Final config: {
   &quot;env&quot;: &quot;dev&quot;,
   &quot;baseUrl&quot;: &quot;http://localhost:8080/api&quot;,
   &quot;testUser&quot;: {
@@ -3796,7 +2999,7 @@ classpath:karate/auth/signup.feature:7
         <span>*</span>&nbsp;<span>def token = authToken.getAuthToken()</span>
       </div>
     </div>
-    <div class="time-cell failed">11</div>
+    <div class="time-cell failed">1</div>
   </div>
 
    
@@ -3805,184 +3008,25 @@ classpath:karate/auth/signup.feature:7
 
   
 
-  <div class="preformatted" data-parent="0.144">12:15:24.995 classpath:karate/personas/personas.feature:144
+  <div class="preformatted" data-parent="0.144">12:50:14.121 classpath:karate/personas/personas.feature:144
 * def token = authToken.getAuthToken()
 js failed:
 &gt;&gt;&gt;&gt;
 01: authToken.getAuthToken()
 &lt;&lt;&lt;&lt;
-org.graalvm.polyglot.PolyglotException: http call failed after 5 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-- com.intuit.karate.core.FeatureResult.getErrorMessagesCombined(FeatureResult.java:215)
-- com.intuit.karate.core.ScenarioEngine.callFeature(ScenarioEngine.java:2046)
-- com.intuit.karate.core.ScenarioEngine.call(ScenarioEngine.java:1948)
-- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:165)
+org.graalvm.polyglot.PolyglotException: java.io.FileNotFoundException: C:\Users\georg\LitheSpeed Dropbox\George Lively\lithespeed code\livelytravelplanner2\backend\target\test-classes\karate\personas\signup.feature (The system cannot find the file specified)
+- com.intuit.karate.resource.FileResource.getStream(FileResource.java:98)
+- com.intuit.karate.core.FeatureParser.parse(FeatureParser.java:70)
+- com.intuit.karate.core.Feature.read(Feature.java:63)
+- com.intuit.karate.core.ScenarioFileReader.readFile(ScenarioFileReader.java:65)
+- com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:164)
 - com.intuit.karate.core.ScenarioBridge.call(ScenarioBridge.java:155)
 - &lt;js&gt;.getAuthToken(Unnamed:13)
 
 classpath:karate/personas/personas.feature:144
 </div>   
 
-  <div>
-        
-    <div class="step-row">
-      <div class="step-container" id="0.144.0.call">
-        <div class="step-ref passed">&gt;&gt;</div>
-        <div class="step-indent"></div>
-        <div class="step-cell passed">karate.auth.signup</div>
-      </div>
-      <div class="time-cell passed">5</div>
-    </div>
-    <div>
-      <div><div>
   
-
-  
-
-  <div class="step-row" data-parent="0.144.0.call">
-    <div class="step-container" id="0.144.0.call.0.4">
-      <div class="step-ref passed">4</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>Given</span>&nbsp;<span>url baseUrl</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.144.0.call">
-    <div class="step-container" id="0.144.0.call.0.5">
-      <div class="step-ref passed">5</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>path &#39;auth/signup&#39;</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.144.0.call">
-    <div class="step-container" id="0.144.0.call.0.6">
-      <div class="step-ref passed">6</div>
-      <div class="step-indent"></div>
-      <div class="step-cell passed">
-        <span>And</span>&nbsp;<span>request __arg</span>
-      </div>
-    </div>
-    <div class="time-cell passed">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.144.0.call">
-    <div class="step-container" id="0.144.0.call.0.7">
-      <div class="step-ref failed">7</div>
-      <div class="step-indent"></div>
-      <div class="step-cell failed">
-        <span>When</span>&nbsp;<span>method post</span>
-      </div>
-    </div>
-    <div class="time-cell failed">5</div>
-  </div>
-
-   
-  
-  
-
-  
-
-  <div class="preformatted" data-parent="0.144.0.call.0.7">12:15:24.993 org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt, http call failed after 5 milliseconds for url: http://localhost:8080/api/auth/signup
-12:15:24.994 classpath:karate/auth/signup.feature:7
-When method post
-http call failed after 5 milliseconds for url: http://localhost:8080/api/auth/signup
-org.apache.http.conn.HttpHostConnectException: Connect to localhost:8080 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: getsockopt
-classpath:karate/auth/signup.feature:7
-</div>   
-
-  
-
-</div>
-</div>
-      <div><div>
-  
-
-  
-
-  <div class="step-row" data-parent="0.144.0.call">
-    <div class="step-container" id="0.144.0.call.0.8">
-      <div class="step-ref skipped">8</div>
-      <div class="step-indent"></div>
-      <div class="step-cell skipped">
-        <span>Then</span>&nbsp;<span>status 200</span>
-      </div>
-    </div>
-    <div class="time-cell skipped">0</div>
-  </div>
-
-   
-  
-  
-
-  
-
-     
-
-  
-
-</div>
-</div>
-    </div>    
-  </div>
 
 </div>
 </div>
