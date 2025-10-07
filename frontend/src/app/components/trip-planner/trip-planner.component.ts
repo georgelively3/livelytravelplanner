@@ -3,14 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { PersonaService, UserPersona, TravelerProfile } from '../../services/persona.service';
-
-export interface Trip {
-  name: string;
-  destination: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-}
+import { TripService, Trip } from '../../services/trip.service';
 
 @Component({
   selector: 'app-trip-planner',
@@ -26,7 +19,8 @@ export class TripPlannerComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private personaService: PersonaService
+    private personaService: PersonaService,
+    private tripService: TripService
   ) {
     this.tripForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -108,12 +102,25 @@ export class TripPlannerComponent implements OnInit {
   }
 
   private createTrip(tripData: Trip): void {
-    // TODO: Replace with actual API call
-    console.log('Trip would be created:', tripData);
-    
-    // For now, simulate success and redirect
-    alert('Trip created successfully! (This is a demo - actual API integration coming soon)');
-    this.router.navigate(['/dashboard']);
+    this.tripService.createTrip(tripData).subscribe({
+      next: (createdTrip) => {
+        console.log('Trip created successfully:', createdTrip);
+        alert(`Trip "${createdTrip.name}" created successfully!`);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        console.error('Error creating trip:', error);
+        
+        let errorMessage = 'Failed to create trip. Please try again.';
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
+        alert(errorMessage);
+      }
+    });
   }
 
   private markFormGroupTouched(): void {

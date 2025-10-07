@@ -1,11 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { TripPlannerComponent } from './trip-planner.component';
 import { AuthService } from '../../services/auth.service';
 import { PersonaService } from '../../services/persona.service';
+import { TripService } from '../../services/trip.service';
 
 describe('TripPlannerComponent', () => {
   let component: TripPlannerComponent;
@@ -13,11 +14,13 @@ describe('TripPlannerComponent', () => {
   let mockRouter: jasmine.SpyObj<Router>;
   let mockAuthService: jasmine.SpyObj<AuthService>;
   let mockPersonaService: jasmine.SpyObj<PersonaService>;
+  let mockTripService: jasmine.SpyObj<TripService>;
 
   beforeEach(() => {
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     const authServiceSpy = jasmine.createSpyObj('AuthService', ['currentUser$']);
     const personaServiceSpy = jasmine.createSpyObj('PersonaService', ['getUserPersonas', 'getTravelerProfiles']);
+    const tripServiceSpy = jasmine.createSpyObj('TripService', ['createTrip']);
     
     authServiceSpy.currentUser$ = of({ id: 1, firstName: 'John', lastName: 'Doe', email: 'john@example.com' });
     
@@ -47,13 +50,25 @@ describe('TripPlannerComponent', () => {
       }]
     }));
 
+    // Mock trip service response
+    tripServiceSpy.createTrip.and.returnValue(of({
+      id: 1,
+      name: 'Summer Vacation',
+      destination: 'Paris, France',
+      startDate: '2025-07-01',
+      endDate: '2025-07-10',
+      description: 'A wonderful trip to explore the City of Light',
+      createdAt: '2025-01-01'
+    }));
+
     TestBed.configureTestingModule({
       declarations: [TripPlannerComponent],
       imports: [ReactiveFormsModule],
       providers: [
         { provide: Router, useValue: routerSpy },
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: PersonaService, useValue: personaServiceSpy }
+        { provide: PersonaService, useValue: personaServiceSpy },
+        { provide: TripService, useValue: tripServiceSpy }
       ]
     });
     
@@ -62,6 +77,7 @@ describe('TripPlannerComponent', () => {
     mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
     mockAuthService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     mockPersonaService = TestBed.inject(PersonaService) as jasmine.SpyObj<PersonaService>;
+    mockTripService = TestBed.inject(TripService) as jasmine.SpyObj<TripService>;
     
     fixture.detectChanges();
   });
@@ -73,10 +89,11 @@ describe('TripPlannerComponent', () => {
   describe('Form Validation', () => {
     it('should initialize form with proper validators', () => {
       expect(component.tripForm).toBeDefined();
-      expect(component.tripForm.get('name')?.hasError('required')).toBeTruthy();
-      expect(component.tripForm.get('destination')?.hasError('required')).toBeTruthy();
-      expect(component.tripForm.get('startDate')?.hasError('required')).toBeTruthy();
-      expect(component.tripForm.get('endDate')?.hasError('required')).toBeTruthy();
+      expect(component.tripForm.get('name')?.valid).toBeFalsy();
+      expect(component.tripForm.get('destination')?.valid).toBeFalsy();
+      expect(component.tripForm.get('startDate')?.valid).toBeTruthy(); // This gets set to today in ngOnInit
+      expect(component.tripForm.get('endDate')?.valid).toBeFalsy();
+      expect(component.tripForm.valid).toBeFalsy(); // Overall form should still be invalid
     });
 
     it('should validate trip name minimum length', () => {
@@ -138,6 +155,48 @@ describe('TripPlannerComponent', () => {
         description: 'A wonderful trip to explore the City of Light'
       });
     });
+  });
+
+  describe('Trip Creation', () => {
+    it('should create trip successfully and navigate to dashboard', fakeAsync(() => {
+      const tripData = {
+        name: 'Summer Vacation',
+        destination: 'Paris, France',
+        startDate: '2025-07-01',
+        endDate: '2025-07-10',
+        description: 'A wonderful trip to explore the City of Light'
+      };
+      
+      component['createTrip'](tripData);
+      tick(); // Process the observable
+      
+      expect(mockTripService.createTrip).toHaveBeenCalledWith(tripData);
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
+    }));
+
+    it('should handle trip creation errors gracefully', fakeAsync(() => {
+      // Mock error response
+      mockTripService.createTrip.and.returnValue(throwError(() => new Error('Server error')));
+      
+      const tripData = {
+        name: 'Summer Vacation',
+        destination: 'Paris, France',
+        startDate: '2025-07-01',
+        endDate: '2025-07-10',
+        description: 'A wonderful trip to explore the City of Light'
+      };
+      
+      spyOn(console, 'error');
+      spyOn(window, 'alert');
+      
+      component['createTrip'](tripData);
+      tick(); // Process the observable
+      
+      expect(mockTripService.createTrip).toHaveBeenCalled();
+      expect(console.error).toHaveBeenCalledWith('Error creating trip:', jasmine.any(Error));
+      expect(window.alert).toHaveBeenCalledWith('Server error');
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+    }));
 
     it('should mark form as touched when invalid', () => {
       component.tripForm.patchValue({
@@ -154,13 +213,23 @@ describe('TripPlannerComponent', () => {
       expect(component['markFormGroupTouched']).toHaveBeenCalled();
     });
 
-    it('should navigate to dashboard after successful trip creation', () => {
+    it('should navigate to dashboard after successful trip creation', fakeAsync(() => {
       spyOn(window, 'alert');
       
+      // Set up valid form data
+      component.tripForm.patchValue({
+        name: 'Summer Vacation',
+        destination: 'Paris, France',
+        startDate: '2025-07-01',
+        endDate: '2025-07-10',
+        description: 'A wonderful trip to explore the City of Light'
+      });
+      
       component.onSubmit();
+      tick(); // Process the observable
       
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/dashboard']);
-    });
+    }));
   });
 
   describe('Navigation', () => {
