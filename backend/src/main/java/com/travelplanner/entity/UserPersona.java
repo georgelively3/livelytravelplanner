@@ -1,11 +1,19 @@
 package com.travelplanner.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_personas")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = {"user", "baseProfile"})
 public class UserPersona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +48,6 @@ public class UserPersona {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public UserPersona() {}
-
     public UserPersona(User user, TravelerProfile baseProfile, String personalPreferences,
                       String constraints, String budgetDetails, String accessibilityNeeds,
                       String groupDynamics) {
@@ -65,86 +71,5 @@ public class UserPersona {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public TravelerProfile getBaseProfile() {
-        return baseProfile;
-    }
-
-    public void setBaseProfile(TravelerProfile baseProfile) {
-        this.baseProfile = baseProfile;
-    }
-
-    public String getPersonalPreferences() {
-        return personalPreferences;
-    }
-
-    public void setPersonalPreferences(String personalPreferences) {
-        this.personalPreferences = personalPreferences;
-    }
-
-    public String getConstraints() {
-        return constraints;
-    }
-
-    public void setConstraints(String constraints) {
-        this.constraints = constraints;
-    }
-
-    public String getBudgetDetails() {
-        return budgetDetails;
-    }
-
-    public void setBudgetDetails(String budgetDetails) {
-        this.budgetDetails = budgetDetails;
-    }
-
-    public String getAccessibilityNeeds() {
-        return accessibilityNeeds;
-    }
-
-    public void setAccessibilityNeeds(String accessibilityNeeds) {
-        this.accessibilityNeeds = accessibilityNeeds;
-    }
-
-    public String getGroupDynamics() {
-        return groupDynamics;
-    }
-
-    public void setGroupDynamics(String groupDynamics) {
-        this.groupDynamics = groupDynamics;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
