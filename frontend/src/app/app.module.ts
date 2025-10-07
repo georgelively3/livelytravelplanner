@@ -11,6 +11,7 @@ import { ProfileWizardComponent } from './components/profile-wizard/profile-wiza
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthService } from './services/auth.service';
 import { PersonaService } from './services/persona.service';
+import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PersonaService } from './services/persona.service';
     HomeComponent,
     LoginComponent,
     ProfileWizardComponent,
-    DashboardComponent
+    DashboardComponent,
+    TripPlannerComponent
   ],
   imports: [
     BrowserModule,

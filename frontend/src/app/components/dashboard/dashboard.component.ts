@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService, User } from '../../services/auth.service';
 
 @Component({
@@ -9,11 +10,18 @@ import { AuthService, User } from '../../services/auth.service';
 export class DashboardComponent implements OnInit {
   currentUser: User | null = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
     });
+  }
+
+  startTripPlanning(): void {
+    this.router.navigate(['/plan-trip']);
   }
 }

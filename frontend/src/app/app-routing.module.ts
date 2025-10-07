@@ -4,12 +4,14 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileWizardComponent } from './components/profile-wizard/profile-wizard.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'profile-wizard', component: ProfileWizardComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'plan-trip', component: TripPlannerComponent },
   { path: '**', redirectTo: '/' }
 ];
 

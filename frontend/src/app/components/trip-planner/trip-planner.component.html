@@ -1,0 +1,98 @@
+<div class="trip-planner-container">
+  <div class="trip-planner-header">
+    <h1>Plan Your Next Adventure</h1>
+    <p class="subtitle">Let's create an amazing trip tailored just for you!</p>
+  </div>
+
+  <form class="trip-form" [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+    <div class="form-sections">
+      
+      <!-- Basic Trip Information -->
+      <div class="form-section">
+        <h2>Trip Basics</h2>
+        
+        <div class="form-group">
+          <label for="tripName">Trip Name</label>
+          <input 
+            type="text" 
+            id="tripName" 
+            formControlName="name" 
+            placeholder="e.g., Summer Vacation 2025"
+            class="form-control">
+          <small class="form-help">Give your trip a memorable name</small>
+        </div>
+
+        <div class="form-group">
+          <label for="destination">Destination</label>
+          <input 
+            type="text" 
+            id="destination" 
+            formControlName="destination" 
+            placeholder="e.g., Paris, France"
+            class="form-control">
+          <small class="form-help">Where would you like to go?</small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input 
+              type="date" 
+              id="startDate" 
+              formControlName="startDate" 
+              class="form-control">
+          </div>
+          
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input 
+              type="date" 
+              id="endDate" 
+              formControlName="endDate" 
+              class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <!-- Trip Description -->
+      <div class="form-section">
+        <h2>Trip Details</h2>
+        
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea 
+            id="description" 
+            formControlName="description" 
+            rows="4"
+            placeholder="Describe your ideal trip... What activities are you excited about? Any special occasions?"
+            class="form-control"></textarea>
+          <small class="form-help">Help us understand what makes this trip special</small>
+        </div>
+      </div>
+
+      <!-- Travel Preferences (from user's persona) -->
+      <div class="form-section" *ngIf="userPersona">
+        <h2>Your Travel Profile</h2>
+        <div class="persona-preview">
+          <div class="persona-info">
+            <h3>{{ userPersona.baseProfile?.name }}</h3>
+            <p>{{ userPersona.baseProfile?.description }}</p>
+          </div>
+          <button type="button" class="btn btn-link" (click)="editProfile()">
+            Update Profile
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline" (click)="goBack()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary" [disabled]="!tripForm.valid">
+        Create Trip
+      </button>
+    </div>
+  </form>
+</div>
