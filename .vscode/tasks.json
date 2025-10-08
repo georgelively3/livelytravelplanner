@@ -25,6 +25,14 @@
 			"options": {
 				"cwd": "${workspaceFolder}/frontend"
 			}
+		},
+		{
+			"label": "Start Backend",
+			"type": "shell",
+			"command": ".\\gradlew.bat :travel-planner-backend:bootRun",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
 		}
 	]
 }

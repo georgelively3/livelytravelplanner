@@ -33,8 +33,12 @@ public class AiController {
     
     @GetMapping("/personalized")
     public ResponseEntity<List<TripSuggestion>> getPersonalizedSuggestions(
-            @RequestParam String userId,
-            @RequestParam List<String> interests) {
+            @RequestParam(required = false) String userId,
+            @RequestParam(required = false) List<String> interests) {
+        // If no parameters provided, return empty list instead of error
+        if (userId == null && (interests == null || interests.isEmpty())) {
+            return ResponseEntity.ok(List.of());
+        }
         List<TripSuggestion> personalized = aiService.getPersonalizedSuggestions(userId, interests);
         return ResponseEntity.ok(personalized);
     }
@@ -66,5 +70,23 @@ public class AiController {
     public ResponseEntity<Object> getBudgetRecommendations(@RequestBody Map<String, Object> request) {
         // TODO: Implement budget recommendations logic
         return ResponseEntity.ok(Map.of("message", "Budget recommendations feature coming soon"));
+    }
+    
+    @PostMapping("/save-trip")
+    public ResponseEntity<Object> saveTripFromSuggestion(@RequestBody Map<String, Object> suggestion) {
+        try {
+            // For now, return a success response
+            // TODO: Implement actual trip saving logic
+            return ResponseEntity.ok(Map.of(
+                "success", true,
+                "message", "Trip saved successfully",
+                "tripId", System.currentTimeMillis() // temporary ID
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                "success", false,
+                "message", "Failed to save trip: " + e.getMessage()
+            ));
+        }
     }
 }

@@ -236,7 +236,7 @@
             
             <div class="highlights">
               <span 
-                *ngFor="let highlight of suggestion.highlights.slice(0, 3)" 
+                *ngFor="let highlight of (suggestion.highlights || []).slice(0, 3)" 
                 class="highlight-tag">
                 {{ highlight }}
               </span>

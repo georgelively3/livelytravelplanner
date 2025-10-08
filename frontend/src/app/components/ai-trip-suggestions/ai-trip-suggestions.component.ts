@@ -187,7 +187,7 @@ export class AiTripSuggestionsComponent implements OnInit {
   }
 
   onSaveAsTrip(suggestion: TripSuggestion): void {
-    this.aiService.saveAsTip(suggestion).subscribe({
+    this.aiService.saveAsTrip(suggestion).subscribe({
       next: (response) => {
         console.log('Trip saved successfully:', response);
         // Navigate to the trip details or dashboard

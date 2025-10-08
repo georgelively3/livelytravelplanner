@@ -148,7 +148,7 @@ export class AiService {
   /**
    * Save a trip suggestion as an actual trip
    */
-  saveAsTip(suggestion: TripSuggestion): Observable<any> {
+  saveAsTrip(suggestion: TripSuggestion): Observable<any> {
     const headers = this.authService.getAuthHeaders();
     return this.http.post<any>(`${this.apiUrl}/save-trip`, suggestion, { headers });
   }
