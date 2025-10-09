@@ -58,6 +58,12 @@
   opacity: 0.9;
 }
 
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
 .btn-large {
   padding: 15px 30px;
   font-size: 1.1rem;
@@ -104,9 +110,34 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.feature-card.featured-ai {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card.featured-ai::before {
+  content: '✨';
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
 .feature-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card.featured-ai:hover {
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
 }
 
 .feature-icon {
@@ -148,6 +179,33 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+.btn-ai {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ai:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-ai::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-ai:hover::after {
+  left: 100%;
+}
+
 .btn-outline {
   background: transparent;
   color: white;
@@ -169,6 +227,10 @@
 
   .hero-title {
     font-size: 2.5rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
   }
 
   .features-section {

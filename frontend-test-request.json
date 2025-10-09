@@ -1,0 +1,16 @@
+{
+  "travelerProfile": {
+    "id": 1,
+    "name": "Test User",
+    "interests": ["outdoor", "hiking", "local cuisine"],
+    "budget": "moderate"
+  },
+  "tripParameters": {
+    "destination": "Lisbon",
+    "startDate": "2025-10-15",
+    "endDate": "2025-10-17",
+    "duration": 3,
+    "budget": 1500.00,
+    "interests": ["outdoor", "hiking", "local cuisine"]
+  }
+}

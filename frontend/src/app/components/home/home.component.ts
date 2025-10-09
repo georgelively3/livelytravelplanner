@@ -31,6 +31,16 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  onTryAiPlanner(): void {
+    // Check if user is logged in
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/ai-trip-planner']);
+    } else {
+      // Show login/signup options first
+      this.router.navigate(['/login']);
+    }
+  }
+
   onLogin(): void {
     this.router.navigate(['/login']);
   }

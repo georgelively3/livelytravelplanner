@@ -74,6 +74,52 @@ export interface AISuggestionsResponse {
   };
 }
 
+export interface TripPlanRequest {
+  travelerProfile: {
+    id: number;
+    name: string;
+    interests: string[];
+    budget: string;
+  };
+  tripParameters: {
+    destination: string;
+    startDate: string;
+    endDate: string;
+    duration: number;
+    budget: number;
+    interests: string[];
+  };
+}
+
+export interface DailyItinerary {
+  day: string;
+  date: string;
+  activities: ItineraryActivity[];
+}
+
+export interface ItineraryActivity {
+  name: string;
+  description: string;
+  type: string;
+  location: string;
+  startTime: string;
+  endTime: string;
+  estimatedCost: number;
+  duration: string;
+}
+
+export interface TripPlanResponse {
+  success: boolean;
+  destination: string;
+  duration: number;
+  startDate: string;
+  endDate: string;
+  totalBudget: number;
+  dailyItineraries: DailyItinerary[];
+  generatedAt: string;
+  aiModel: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -169,5 +215,22 @@ export class AiService {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set('maxBudget', maxBudget.toString());
     return this.http.get<TripSuggestion[]>(`${this.apiUrl}/budget-friendly`, { headers, params });
+  }
+
+  /**
+   * Generate a complete trip plan with daily itineraries
+   */
+  generateTripPlan(request: TripPlanRequest): Observable<TripPlanResponse> {
+    // Create basic headers for the request
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    
+    // Only add auth headers if user is logged in
+    if (this.authService.isLoggedIn()) {
+      headers = this.authService.getAuthHeaders();
+    }
+    
+    return this.http.post<TripPlanResponse>(`${this.apiUrl}/trip-plan`, request, { headers });
   }
 }

@@ -89,4 +89,29 @@ public class AiController {
             ));
         }
     }
+    
+    @PostMapping("/trip-plan")
+    public ResponseEntity<Object> generateTripPlan(@RequestBody Map<String, Object> request) {
+        try {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> travelerProfile = (Map<String, Object>) request.get("travelerProfile");
+            @SuppressWarnings("unchecked")
+            Map<String, Object> tripParameters = (Map<String, Object>) request.get("tripParameters");
+            
+            String destination = (String) tripParameters.get("destination");
+            Integer duration = (Integer) tripParameters.get("duration");
+            @SuppressWarnings("unchecked")
+            List<String> interests = (List<String>) tripParameters.get("interests");
+            
+            // Generate AI trip plan using the simplest approach
+            Object tripPlan = aiService.generateTripPlan(travelerProfile, tripParameters);
+            
+            return ResponseEntity.ok(tripPlan);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                "success", false,
+                "message", "Failed to generate trip plan: " + e.getMessage()
+            ));
+        }
+    }
 }

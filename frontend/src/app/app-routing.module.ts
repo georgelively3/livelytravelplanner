@@ -6,6 +6,7 @@ import { ProfileWizardComponent } from './components/profile-wizard/profile-wiza
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
 import { AiTripSuggestionsComponent } from './components/ai-trip-suggestions/ai-trip-suggestions.component';
+import { AiTripPlannerComponent } from './components/ai-trip-planner/ai-trip-planner.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'plan-trip', component: TripPlannerComponent },
   { path: 'ai-suggestions', component: AiTripSuggestionsComponent },
+  { path: 'ai-trip-planner', component: AiTripPlannerComponent },
   { path: '**', redirectTo: '/' }
 ];
 

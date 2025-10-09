@@ -3,6 +3,12 @@
     <div class="nav-brand">
       <h2>Travel Planner</h2>
     </div>
+    <div class="nav-links">
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/plan-trip" routerLinkActive="active">Plan Trip</a>
+      <a routerLink="/ai-trip-planner" routerLinkActive="active">🤖 AI Planner</a>
+      <a routerLink="/ai-suggestions" routerLinkActive="active">AI Suggestions</a>
+    </div>
     <div class="nav-menu">
       <span class="user-greeting">Welcome, {{ currentUser.firstName }}!</span>
       <button class="btn btn-outline" (click)="logout()">Logout</button>

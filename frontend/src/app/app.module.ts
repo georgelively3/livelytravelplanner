@@ -14,6 +14,7 @@ import { PersonaService } from './services/persona.service';
 import { AiService } from './services/ai.service';
 import { TripPlannerComponent } from './components/trip-planner/trip-planner.component';
 import { AiTripSuggestionsComponent } from './components/ai-trip-suggestions/ai-trip-suggestions.component';
+import { AiTripPlannerComponent } from './components/ai-trip-planner/ai-trip-planner.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AiTripSuggestionsComponent } from './components/ai-trip-suggestions/ai-
     ProfileWizardComponent,
     DashboardComponent,
     TripPlannerComponent,
-    AiTripSuggestionsComponent
+    AiTripSuggestionsComponent,
+    AiTripPlannerComponent
   ],
   imports: [
     BrowserModule,

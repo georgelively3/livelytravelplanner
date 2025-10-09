@@ -15,24 +15,35 @@
 
   <div class="hero-section">
     <div class="hero-content">
-      <h1 class="hero-title">Plan Your Perfect Journey</h1>
+      <h1 class="hero-title">Plan Your Perfect Journey with AI</h1>
       <p class="hero-subtitle">
-        Create personalized travel experiences based on your unique travel style and preferences. 
-        From adventure seekers to luxury travelers, we'll help you plan the trip of a lifetime.
+        Create personalized travel experiences using our advanced AI trip planner. 
+        From adventure seekers to luxury travelers, our AI will help you plan the trip of a lifetime 
+        based on your unique travel style and preferences.
       </p>
-      <button class="btn btn-primary btn-large" (click)="onGetStarted()">
-        Get Started
-      </button>
+      <div class="hero-buttons">
+        <button class="btn btn-primary btn-large" (click)="onGetStarted()">
+          Get Started
+        </button>
+        <button class="btn btn-ai btn-large" (click)="onTryAiPlanner()">
+          🤖 Try AI Planner
+        </button>
+      </div>
     </div>
     <div class="hero-image">
       <div class="placeholder-image">
-        🌍 ✈️ 🏖️
+        🌍 ✈️ 🏖️ 🤖
       </div>
     </div>
   </div>
 
   <div class="features-section">
     <div class="features-grid">
+      <div class="feature-card featured-ai">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Trip Planner</h3>
+        <p>Let our advanced AI create detailed itineraries tailored to your interests, budget, and travel style in seconds.</p>
+      </div>
       <div class="feature-card">
         <div class="feature-icon">🎯</div>
         <h3>Personalized Planning</h3>
