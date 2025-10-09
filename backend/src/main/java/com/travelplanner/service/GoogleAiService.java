@@ -21,7 +21,7 @@ import java.util.*;
 public class GoogleAiService {
     
     private static final Logger logger = LoggerFactory.getLogger(GoogleAiService.class);
-    private static final String GEMINI_MODEL = "gemini-pro";
+    private static final String GEMINI_MODEL = "gemini-2.5-flash";
     private static final Duration TIMEOUT = Duration.ofSeconds(30);
     
     private final WebClient webClient;

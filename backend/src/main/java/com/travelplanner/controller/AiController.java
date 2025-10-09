@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,10 +106,10 @@ public class AiController {
             Map<String, Object> tripParameters = (Map<String, Object>) request.get("tripParameters");
             
             if (travelerProfile == null || tripParameters == null) {
-                return ResponseEntity.badRequest().body(Map.of(
-                    "success", false,
-                    "message", "Missing travelerProfile or tripParameters in request"
-                ));
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("success", false);
+                errorResponse.put("message", "Missing travelerProfile or tripParameters in request");
+                return ResponseEntity.badRequest().body(errorResponse);
             }
             
             String destination = (String) tripParameters.get("destination");
@@ -121,25 +122,24 @@ public class AiController {
             
             return ResponseEntity.ok(tripPlan);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "message", "Failed to generate trip plan: " + e.getMessage(),
-                "error", e.getClass().getSimpleName()
-            ));
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Failed to generate trip plan: " + e.getMessage());
+            errorResponse.put("error", e.getClass().getSimpleName());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
     
     @GetMapping("/test-google-ai")
     public ResponseEntity<Object> testGoogleAi() {
         try {
-            // Test 1: Basic info
-            Map<String, Object> basicInfo = Map.of(
-                "success", true,
-                "message", "Google AI endpoint is reachable",
-                "timestamp", System.currentTimeMillis(),
-                "apiKeyConfigured", googleAiConfig.isApiKeyConfigured(),
-                "apiKeyLength", googleAiConfig.getApiKey() != null ? googleAiConfig.getApiKey().length() : 0
-            );
+            // Test 1: Basic info using mutable HashMap
+            Map<String, Object> basicInfo = new HashMap<>();
+            basicInfo.put("success", true);
+            basicInfo.put("message", "Google AI endpoint is reachable");
+            basicInfo.put("timestamp", System.currentTimeMillis());
+            basicInfo.put("apiKeyConfigured", googleAiConfig.isApiKeyConfigured());
+            basicInfo.put("apiKeyLength", googleAiConfig.getApiKey() != null ? googleAiConfig.getApiKey().length() : 0);
             
             System.out.println("TEST: Basic API info - " + basicInfo);
             
@@ -148,18 +148,19 @@ public class AiController {
                 try {
                     System.out.println("TEST: Attempting Google AI API call...");
                     
-                    // Create a very simple test request
+                    // Create a very simple test request using mutable maps
                     WebClient simpleClient = WebClient.builder().build();
                     String apiKey = googleAiConfig.getApiKey();
                     String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey;
                     
-                    Map<String, Object> testRequest = Map.of(
-                        "contents", List.of(
-                            Map.of("parts", List.of(
-                                Map.of("text", "Hello, respond with 'Test successful'")
-                            ))
-                        )
-                    );
+                    Map<String, Object> textPart = new HashMap<>();
+                    textPart.put("text", "Hello, respond with 'Test successful'");
+                    
+                    Map<String, Object> contentPart = new HashMap<>();
+                    contentPart.put("parts", List.of(textPart));
+                    
+                    Map<String, Object> testRequest = new HashMap<>();
+                    testRequest.put("contents", List.of(contentPart));
                     
                     System.out.println("TEST: Making request to URL: " + url.substring(0, url.lastIndexOf("=") + 1) + "***");
                     
@@ -188,11 +189,11 @@ public class AiController {
             return ResponseEntity.ok(basicInfo);
         } catch (Exception e) {
             System.out.println("TEST: General error: " + e.getMessage());
-            return ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "message", "Google AI test failed: " + e.getMessage(),
-                "error", e.getClass().getSimpleName()
-            ));
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Google AI test failed: " + e.getMessage());
+            errorResponse.put("error", e.getClass().getSimpleName());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
 }
