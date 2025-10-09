@@ -3,6 +3,7 @@ package com.travelplanner.service;
 import com.travelplanner.dto.AISuggestionsResponse;
 import com.travelplanner.dto.TripSuggestion;
 import com.travelplanner.dto.TripSuggestionRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,6 +20,19 @@ public class AiService {
     
     private static final String AI_MODEL_VERSION = "TravelPlanner-AI-v1.0";
     
+    private final GoogleAiService googleAiService;
+    
+    @Autowired
+    public AiService(GoogleAiService googleAiService) {
+        this.googleAiService = googleAiService;
+    }
+    
+    // Delegate the main AI trip planning to GoogleAiService
+    public Map<String, Object> generateTripPlan(Map<String, Object> travelerProfile, Map<String, Object> tripParameters) {
+        return googleAiService.generateTripPlan(travelerProfile, tripParameters);
+    }
+    
+    // Keep existing methods for backward compatibility
     public AISuggestionsResponse getTripSuggestions(TripSuggestionRequest request) {
         long startTime = System.currentTimeMillis();
         
@@ -83,7 +97,6 @@ public class AiService {
     }
     
     public List<TripSuggestion> getPersonalizedSuggestions(String userId, List<String> interests) {
-        // In a real implementation, this would use user's travel history and preferences
         List<TripSuggestion> personalized = new ArrayList<>();
         
         if (interests.contains("Adventure")) {
@@ -146,7 +159,6 @@ public class AiService {
     public List<TripSuggestion> getActivityRecommendations(String destination, List<String> interests) {
         List<TripSuggestion> activities = new ArrayList<>();
         
-        // Sample activity recommendations based on destination and interests
         if (destination.toLowerCase().contains("paris")) {
             if (interests.contains("Art")) {
                 TripSuggestion artTour = createTripSuggestion(
@@ -167,17 +179,13 @@ public class AiService {
     private List<TripSuggestion> generateTripSuggestions(TripSuggestionRequest request) {
         List<TripSuggestion> suggestions = new ArrayList<>();
         
-        // Generate suggestions based on request parameters
         String destination = request.getDestination();
         BigDecimal budget = request.getBudget() != null ? BigDecimal.valueOf(request.getBudget()) : null;
         List<String> interests = request.getInterests();
         
-        // Sample suggestion generation logic
         if (destination == null || destination.isEmpty()) {
-            // Generate suggestions based on interests and budget
             suggestions.addAll(generateSuggestionsByInterests(interests, budget));
         } else {
-            // Generate suggestions for specific destination
             suggestions.addAll(generateSuggestionsForDestination(destination, budget, interests));
         }
         
@@ -213,7 +221,6 @@ public class AiService {
     private List<TripSuggestion> generateSuggestionsForDestination(String destination, BigDecimal budget, List<String> interests) {
         List<TripSuggestion> suggestions = new ArrayList<>();
         
-        // Create destination-specific suggestions
         TripSuggestion suggestion = createTripSuggestion(
             "Explore " + destination,
             destination,
@@ -240,7 +247,6 @@ public class AiService {
         suggestion.setDurationDays(duration);
         suggestion.setConfidenceScore(confidence);
         
-        // Add sample activities
         List<TripSuggestion.Activity> activities = new ArrayList<>();
         activities.add(new TripSuggestion.Activity(
             "City Tour", "Guided tour of main attractions", 
@@ -248,7 +254,6 @@ public class AiService {
         ));
         suggestion.setActivities(activities);
         
-        // Add sample accommodation
         List<TripSuggestion.Accommodation> accommodations = new ArrayList<>();
         accommodations.add(new TripSuggestion.Accommodation(
             "City Center Hotel", "Hotel", 
@@ -256,7 +261,6 @@ public class AiService {
         ));
         suggestion.setAccommodations(accommodations);
         
-        // Add weather info
         TripSuggestion.WeatherInfo weather = new TripSuggestion.WeatherInfo(
             "Spring", "18-22°C", "Mild and pleasant weather"
         );
@@ -318,193 +322,5 @@ public class AiService {
             4,
             0.84
         );
-    }
-    
-    public Object generateTripPlan(Map<String, Object> travelerProfile, Map<String, Object> tripParameters) {
-        String destination = (String) tripParameters.get("destination");
-        Integer duration = (Integer) tripParameters.get("duration");
-        @SuppressWarnings("unchecked")
-        List<String> interests = (List<String>) tripParameters.get("interests");
-        // Handle budget as either Integer or Double
-        Object budgetObj = tripParameters.get("budget");
-        Double budget = null;
-        if (budgetObj instanceof Integer) {
-            budget = ((Integer) budgetObj).doubleValue();
-        } else if (budgetObj instanceof Double) {
-            budget = (Double) budgetObj;
-        }
-        String startDate = (String) tripParameters.get("startDate");
-        String endDate = (String) tripParameters.get("endDate");
-        
-        // Generate daily itineraries based on the simplest approach
-        List<Map<String, Object>> dailyItineraries = new ArrayList<>();
-        
-        for (int day = 1; day <= duration; day++) {
-            List<Map<String, Object>> activities = generateDayActivities(destination, interests, day);
-            
-            Map<String, Object> dayItinerary = Map.of(
-                "day", "Day " + day,
-                "date", calculateDate(startDate, day - 1),
-                "activities", activities
-            );
-            
-            dailyItineraries.add(dayItinerary);
-        }
-        
-        return Map.of(
-            "success", true,
-            "destination", destination,
-            "duration", duration,
-            "startDate", startDate,
-            "endDate", endDate,
-            "totalBudget", budget,
-            "dailyItineraries", dailyItineraries,
-            "generatedAt", LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-            "aiModel", AI_MODEL_VERSION
-        );
-    }
-    
-    private List<Map<String, Object>> generateDayActivities(String destination, List<String> interests, int dayNumber) {
-        List<Map<String, Object>> activities = new ArrayList<>();
-        
-        // Generate morning activity
-        activities.add(createActivity(
-            "Morning Exploration", 
-            "Start your day exploring the historic center of " + destination,
-            "attraction",
-            destination,
-            "09:00",
-            "12:00"
-        ));
-        
-        // Generate lunch restaurant
-        activities.add(createActivity(
-            getRestaurantName(destination, interests),
-            "Enjoy authentic local cuisine at this highly-rated restaurant",
-            "restaurant", 
-            destination,
-            "12:30",
-            "14:00"
-        ));
-        
-        // Generate afternoon activity based on interests
-        String afternoonActivity = getAfternoonActivity(destination, interests, dayNumber);
-        activities.add(createActivity(
-            afternoonActivity,
-            "Afternoon activity tailored to your interests in " + destination,
-            getActivityType(interests),
-            destination,
-            "15:00", 
-            "18:00"
-        ));
-        
-        // Generate dinner restaurant
-        activities.add(createActivity(
-            getDinnerRestaurant(destination),
-            "End your day with a memorable dining experience",
-            "restaurant",
-            destination,
-            "19:30",
-            "21:30"
-        ));
-        
-        return activities;
-    }
-    
-    private Map<String, Object> createActivity(String name, String description, String type, 
-                                             String location, String startTime, String endTime) {
-        return Map.of(
-            "name", name,
-            "description", description,
-            "type", type,
-            "location", location,
-            "startTime", startTime,
-            "endTime", endTime,
-            "estimatedCost", getEstimatedCost(type),
-            "duration", calculateDuration(startTime, endTime)
-        );
-    }
-    
-    private String getRestaurantName(String destination, List<String> interests) {
-        if (destination.toLowerCase().contains("lisbon")) {
-            return "Pastéis de Belém";
-        } else if (destination.toLowerCase().contains("paris")) {
-            return "Le Comptoir du Relais";
-        } else {
-            return "Local Cuisine Restaurant";
-        }
-    }
-    
-    private String getAfternoonActivity(String destination, List<String> interests, int dayNumber) {
-        if (destination.toLowerCase().contains("lisbon")) {
-            switch (dayNumber) {
-                case 1: return "Explore Belém Tower and Jerónimos Monastery";
-                case 2: return "Wander through Alfama's narrow streets";
-                case 3: return "Day trip to Sintra Palace";
-                default: return "Explore Chiado district";
-            }
-        } else if (destination.toLowerCase().contains("paris")) {
-            switch (dayNumber) {
-                case 1: return "Visit the Louvre Museum";
-                case 2: return "Climb the Eiffel Tower";
-                case 3: return "Stroll through Montmartre";
-                default: return "Explore Latin Quarter";
-            }
-        } else {
-            return "Visit main attractions in " + destination;
-        }
-    }
-    
-    private String getDinnerRestaurant(String destination) {
-        if (destination.toLowerCase().contains("lisbon")) {
-            return "Taberna do Real Fado";
-        } else if (destination.toLowerCase().contains("paris")) {
-            return "L'Ami Jean";
-        } else {
-            return "Traditional Local Restaurant";
-        }
-    }
-    
-    private String getActivityType(List<String> interests) {
-        if (interests.contains("museums") || interests.contains("art")) {
-            return "cultural";
-        } else if (interests.contains("outdoor") || interests.contains("hiking")) {
-            return "outdoor";
-        } else {
-            return "attraction";
-        }
-    }
-    
-    private double getEstimatedCost(String type) {
-        switch (type) {
-            case "restaurant": return 35.0;
-            case "cultural": 
-            case "museum": return 15.0;
-            case "attraction": return 20.0;
-            case "outdoor": return 10.0;
-            default: return 25.0;
-        }
-    }
-    
-    private String calculateDuration(String startTime, String endTime) {
-        // Simple duration calculation
-        String[] start = startTime.split(":");
-        String[] end = endTime.split(":");
-        int startMinutes = Integer.parseInt(start[0]) * 60 + Integer.parseInt(start[1]);
-        int endMinutes = Integer.parseInt(end[0]) * 60 + Integer.parseInt(end[1]);
-        int durationMinutes = endMinutes - startMinutes;
-        
-        if (durationMinutes >= 60) {
-            int hours = durationMinutes / 60;
-            int minutes = durationMinutes % 60;
-            return hours + "h " + (minutes > 0 ? minutes + "m" : "");
-        } else {
-            return durationMinutes + "m";
-        }
-    }
-    
-    private String calculateDate(String startDate, int daysToAdd) {
-        // Simple date calculation - in real implementation use LocalDate
-        return startDate; // For simplicity, just return start date for now
     }
 }

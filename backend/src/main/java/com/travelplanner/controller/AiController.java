@@ -1,5 +1,6 @@
 package com.travelplanner.controller;
 
+import com.travelplanner.config.GoogleAiConfig;
 import com.travelplanner.dto.AISuggestionsResponse;
 import com.travelplanner.dto.TripSuggestion;
 import com.travelplanner.dto.TripSuggestionRequest;
@@ -7,7 +8,9 @@ import com.travelplanner.service.AiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +21,9 @@ public class AiController {
     
     @Autowired
     private AiService aiService;
+    
+    @Autowired
+    private GoogleAiConfig googleAiConfig;
     
     @PostMapping("/suggestions")
     public ResponseEntity<AISuggestionsResponse> getTripSuggestions(@RequestBody TripSuggestionRequest request) {
@@ -98,6 +104,13 @@ public class AiController {
             @SuppressWarnings("unchecked")
             Map<String, Object> tripParameters = (Map<String, Object>) request.get("tripParameters");
             
+            if (travelerProfile == null || tripParameters == null) {
+                return ResponseEntity.badRequest().body(Map.of(
+                    "success", false,
+                    "message", "Missing travelerProfile or tripParameters in request"
+                ));
+            }
+            
             String destination = (String) tripParameters.get("destination");
             Integer duration = (Integer) tripParameters.get("duration");
             @SuppressWarnings("unchecked")
@@ -110,7 +123,75 @@ public class AiController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of(
                 "success", false,
-                "message", "Failed to generate trip plan: " + e.getMessage()
+                "message", "Failed to generate trip plan: " + e.getMessage(),
+                "error", e.getClass().getSimpleName()
+            ));
+        }
+    }
+    
+    @GetMapping("/test-google-ai")
+    public ResponseEntity<Object> testGoogleAi() {
+        try {
+            // Test 1: Basic info
+            Map<String, Object> basicInfo = Map.of(
+                "success", true,
+                "message", "Google AI endpoint is reachable",
+                "timestamp", System.currentTimeMillis(),
+                "apiKeyConfigured", googleAiConfig.isApiKeyConfigured(),
+                "apiKeyLength", googleAiConfig.getApiKey() != null ? googleAiConfig.getApiKey().length() : 0
+            );
+            
+            System.out.println("TEST: Basic API info - " + basicInfo);
+            
+            // Test 2: Try to make a simple Google AI call
+            if (googleAiConfig.isApiKeyConfigured()) {
+                try {
+                    System.out.println("TEST: Attempting Google AI API call...");
+                    
+                    // Create a very simple test request
+                    WebClient simpleClient = WebClient.builder().build();
+                    String apiKey = googleAiConfig.getApiKey();
+                    String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + apiKey;
+                    
+                    Map<String, Object> testRequest = Map.of(
+                        "contents", List.of(
+                            Map.of("parts", List.of(
+                                Map.of("text", "Hello, respond with 'Test successful'")
+                            ))
+                        )
+                    );
+                    
+                    System.out.println("TEST: Making request to URL: " + url.substring(0, url.lastIndexOf("=") + 1) + "***");
+                    
+                    String response = simpleClient.post()
+                        .uri(url)
+                        .bodyValue(testRequest)
+                        .retrieve()
+                        .bodyToMono(String.class)
+                        .timeout(Duration.ofSeconds(10))
+                        .block();
+                    
+                    System.out.println("TEST: Google AI response: " + response);
+                    
+                    basicInfo.put("googleAiTest", "SUCCESS");
+                    basicInfo.put("googleAiResponse", response);
+                    
+                } catch (Exception apiError) {
+                    System.out.println("TEST: Google AI API error: " + apiError.getMessage());
+                    basicInfo.put("googleAiTest", "FAILED");
+                    basicInfo.put("googleAiError", apiError.getMessage());
+                }
+            } else {
+                basicInfo.put("googleAiTest", "SKIPPED - No API key");
+            }
+            
+            return ResponseEntity.ok(basicInfo);
+        } catch (Exception e) {
+            System.out.println("TEST: General error: " + e.getMessage());
+            return ResponseEntity.badRequest().body(Map.of(
+                "success", false,
+                "message", "Google AI test failed: " + e.getMessage(),
+                "error", e.getClass().getSimpleName()
             ));
         }
     }
